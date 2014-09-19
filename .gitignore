@@ -1,0 +1,2 @@
+# Ignore OSX specific files
+.DS_Store
