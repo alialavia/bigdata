@@ -1,0 +1,8 @@
+Username: ethzbigdata
+Password: fortwitter
+
+API Key: Cr0DUzVu5vCL1Ocv0J9TzgXS8
+API Secret: HyS4V5QiWCsrzXHGuYQao4Vi7NUwLGeID9RzV2i4sf6YmPQdXd
+
+Access token: 2826918072-iRPfA5QUzGWBSvAxXz77V2J8vbrFQMp5FdPENoF
+Access token secret: TY5q5wBkRO4x7j9Bwnm4mUt1WliAwwSzgp8AsPwfXLAZ2
