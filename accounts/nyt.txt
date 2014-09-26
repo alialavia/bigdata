@@ -1,0 +1,37 @@
+NYT Campaign Finance API key:
+E-mail address: naturen@gmail.com
+Campaign Finance API key: fcab46d8a3ba76981db3fbfedd68851d:13:69854008
+
+NYT Event Listings API key:
+E-mail address: naturen@gmail.com
+Event Listings API key: 27bfcc2662530827a1b51f6bec87c4a2:11:69854008
+
+NYT Best Sellers API key:
+E-mail address: naturen@gmail.com
+Best Sellers API key: 6f78dcee4703c2876f86c2bb6a075fa7:8:69854008
+
+NYT Article Search API key:
+E-mail address: naturen@gmail.com
+Article Search API key: 5c2e019a561730d3064c79c46141e07c:3:69854008
+
+NYT Movie Reviews API key:
+E-mail address: naturen@gmail.com
+Movie Reviews API key: c6ecfc46c8d010ae4a2b6b1c4fa01347:17:69854008
+
+NYT Semantic API key:
+E-mail address: naturen@gmail.com
+Semantic API key: 25646fdb6b3a4d952c7b9001c7ed15e9:19:69854008
+
+NYT TimesTags API key:
+E-mail address: naturen@gmail.com
+TimesTags API key: 1f3619f05a96a4ef09b1e69e227346fa:18:69854008
+
+NYT Geo API key:
+E-mail address: naturen@gmail.com
+Geo API key: 356355a079d59de4d0f3b0e7334c6471:1:69854008
+
+NYT Most Popular API key:
+E-mail address: naturen@gmail.com
+Most Popular API key: 8293de7fe7207a12f01e09c23a2ac77e:13:69854008
+
+
