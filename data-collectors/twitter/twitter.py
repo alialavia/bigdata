@@ -1,6 +1,5 @@
 from requests_oauthlib import OAuth1
 from time import sleep, strftime
-from json import dump
 import requests
 import logging
 
