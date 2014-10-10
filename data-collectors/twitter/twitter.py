@@ -2,13 +2,14 @@ from requests_oauthlib import OAuth1
 from time import sleep, strftime
 import requests
 import logging
+import sys, getopt
 
 TIMEOUT = 60
 MAX_TWEETS_IN_FILE = 100000
-APP_KEY = "Cr0DUzVu5vCL1Ocv0J9TzgXS8"
-APP_SECRET = "HyS4V5QiWCsrzXHGuYQao4Vi7NUwLGeID9RzV2i4sf6YmPQdXd"
-OAUTH_TOKEN = "2826918072-iRPfA5QUzGWBSvAxXz77V2J8vbrFQMp5FdPENoF"
-OAUTH_TOKEN_SECRET = "TY5q5wBkRO4x7j9Bwnm4mUt1WliAwwSzgp8AsPwfXLAZ2"
+APP_KEY = "OuooZ8GbWmuWEw6j6Dw61d9Mz"
+APP_SECRET = "BAtyvHU74Hx28XQniFadSaZw1wKvjkUK29AxxFyb9SzQnqA4bh"
+OAUTH_TOKEN = "34725972-00fHS1H3rbWX6HEQT1M6beDlAFZuCheJn5GIlXv54"
+OAUTH_TOKEN_SECRET = "Dbj1GG8bIFYoAoizgEfRKd1zLLtn0qq95E4mStNfYNDSy"
 
 
 class TwitterStream(object):
@@ -33,7 +34,9 @@ def get_new_filename(basename=""):
     return "%s%s" % (basename, strftime("%Y%m%d%H%M%S"))
 
 
-def main():
+def main(argv):
+    e = 1
+    helpstring = "usage: twitter.py {-e [E]}"
     logger = logging.getLogger("twitter")
     loghandler = logging.FileHandler("twitter.log")
     loghandler.setFormatter(logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s"))
@@ -41,22 +44,46 @@ def main():
     logger.setLevel(logging.INFO)
 
     twitter_stream = TwitterStream(APP_KEY, APP_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
+    try:
+        opts, args = getopt.getopt(argv, "he:", ["every="])
+    except getopt.GetoptError:
+        print helpstring
+        sys.exit(2)
+    for opt, arg in opts:
+        if opt == "-h":
+            print helpstring
+            sys.exit()
+        elif opt in ("-e", "--every"):
+            try:
+                e = int(arg)
+                if e<1:
+                    print "e should be set a positive non-zero number"
+                    sys.exit()
+            except ValueError:
+                print "e should be set a positive non-zero number"
+                sys.exit()
+
+
 
     while True:
         output_stream = None
         try:
-            
+
             twitter_stream.request_tweets({'locations':'-180,-90,180,90', 'language':'en'})
             logger.info("Requested twitter stream")
-            
+            logger.info("Saving every " + `e` + " tweets")
+
             tweet_count = 0
             output_stream = file(get_new_filename("twitter-"), "w")
             logger.info("Opened output file %s" % output_stream.name)
 
             logger.info("Writing results")
             for item in twitter_stream:
-                output_stream.write(item)
-                output_stream.write("\n")
+
+                if tweet_count % e == 0:
+                    output_stream.write(item)
+                    output_stream.write("\n")
+
                 tweet_count += 1
 
                 # If we reach the maximum number of tweets, we move to a new file
@@ -77,5 +104,5 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    main(sys.argv[1:])
 
