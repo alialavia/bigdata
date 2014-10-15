@@ -23,18 +23,26 @@ def getNewsWire(total_cnt):
   offset = 1
   
   while offset < total_cnt: 
+    output_stream = None
     try:
       url_param = {'api-key':API_KEY, 'offset':offset}
       news = requests.get(API_URL, params=url_param)
-      print(news.url)
-      offset = offset + 20
-      output_stream = file(get_new_filename("nyt-"), "w")
-      logger.info("Opened output file %s" % output_stream.name)
-      output_stream.write(news.text)
+      if (news.status_code == 200):
+        print(news.url)
+        offset = offset + 20
+        output_stream = file(get_new_filename("nyt-"), "w")
+        logger.info("Opened output file %s" % output_stream.name)
+        output_stream.write(news.text)
+      elif (news.status_code == 500):
+        raise Exception("internal server error")
     except Exception as e:
-       print(e) 
+      logger.error(e.message) 
+      sleep(TIMEOUT)
+      continue
     finally:
-      output_stream.close()
+      if output_stream is not None and not output_stream.closed:
+        output_stream.close()
+      logger.info("")
 
 def get_new_filename(basename=""):
   return "%s%s" % (basename, strftime("%Y%m%d%H%M%S"))
