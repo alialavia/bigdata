@@ -1,0 +1,41 @@
+2014-10-25 14:59:34,144 - twitternews - INFO - Requesting from @BBCPolitics and write to tw_bbcpolitics.news
+2014-10-25 14:59:35,031 - twitternews - INFO - Opened output file tw_bbcpolitics.news
+2014-10-25 14:59:35,031 - twitternews - INFO - Writing 200 results from BBCPolitics
+
+
+2014-10-25 14:59:40,076 - twitternews - INFO - Requesting from @cnnpolitics and write to tw_cnnpolitics.news
+2014-10-25 14:59:41,051 - twitternews - INFO - Opened output file tw_cnnpolitics.news
+2014-10-25 14:59:41,051 - twitternews - INFO - Writing 197 results from cnnpolitics
+
+
+2014-10-25 14:59:46,076 - twitternews - INFO - Requesting from @WorldSportCNN and write to tw_cnnsport.news
+2014-10-25 14:59:47,058 - twitternews - INFO - Opened output file tw_cnnsport.news
+2014-10-25 14:59:47,058 - twitternews - INFO - Writing 198 results from WorldSportCNN
+
+
+2014-10-25 14:59:52,084 - twitternews - INFO - Requesting from @BBCSport and write to tw_bbcsport.news
+2014-10-25 14:59:53,181 - twitternews - INFO - Opened output file tw_bbcsport.news
+2014-10-25 14:59:53,181 - twitternews - INFO - Writing 200 results from BBCSport
+
+
+2014-10-25 14:59:58,206 - twitternews - INFO - Requesting from @cnntech and write to tw_cnntech.news
+2014-10-25 14:59:59,225 - twitternews - INFO - Opened output file tw_cnntech.news
+2014-10-25 14:59:59,225 - twitternews - INFO - Writing 199 results from cnntech
+
+
+2014-10-25 15:00:04,251 - twitternews - INFO - Requesting from @BBCTech and write to tw_bbctech.news
+2014-10-25 15:00:05,026 - twitternews - INFO - Opened output file tw_bbctech.news
+2014-10-25 15:00:05,027 - twitternews - INFO - Writing 200 results from BBCTech
+
+
+2014-10-25 15:00:10,047 - twitternews - INFO - Requesting from @BBCPolitics and write to tw_bbcpolitics.news
+2014-10-25 15:00:10,569 - twitternews - INFO - Opened output file tw_bbcpolitics.news
+2014-10-25 15:00:10,569 - twitternews - INFO - Writing 0 results from BBCPolitics
+
+
+2014-10-25 15:00:15,574 - twitternews - INFO - Requesting from @cnnpolitics and write to tw_cnnpolitics.news
+2014-10-25 15:00:16,063 - twitternews - INFO - Opened output file tw_cnnpolitics.news
+2014-10-25 15:00:16,063 - twitternews - INFO - Writing 0 results from cnnpolitics
+
+
+2014-10-25 15:00:21,068 - twitternews - INFO - Requesting from @WorldSportCNN and write to tw_cnnsport.news
