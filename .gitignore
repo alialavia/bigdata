@@ -1,2 +1,8 @@
 # Ignore OSX specific files
-.DS_Store
+*.DS_Store
+
+# Ignore python compiled files
+*.pyc
+
+# Ignore pycharm IDE
+.idea
