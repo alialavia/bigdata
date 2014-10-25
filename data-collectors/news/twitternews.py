@@ -86,7 +86,7 @@ def main():
                 for item in posts:                                        
                     extract_news = json.dumps({"headlines": item['text'], "date": item['created_at'], "abstract": item['text'], "keywords": item['text'], "source": screen_name}, 
                         sort_keys=True)
-                    output_stream.write(json.dumps(item))
+                    output_stream.write(extract_news)
                     output_stream.write("\n")
                     id = item['id']
                     last_id[screen_name] = max(last_id[screen_name], id) 
