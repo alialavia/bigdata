@@ -17,7 +17,7 @@ def iterate_news(directory):
                 for line in f:
                     try:
                         article = loads(line)
-                        if 'text' in article:
+                        if 'abstract' in article:
                             yield article
                     except ValueError, e:
                         pass
