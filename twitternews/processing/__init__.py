@@ -1,1 +1,1 @@
-from featurizer import featurize
+from featurizer import featurize, featurize_all
