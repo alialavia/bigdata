@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.10.24)  27 OCT 2014 17:45
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.10.24)  27 OCT 2014 17:58
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -633,18 +633,19 @@ g the clas-si-fier we pre-vi-ously trained
 
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-<rpi.jpg, id=17, 602.25pt x 602.25pt>
-File: rpi.jpg Graphic file (type jpg)
- <use rpi.jpg>
-Package pdftex.def Info: rpi.jpg used on input line 127.
+<images/rpi.jpg, id=17, 602.25pt x 602.25pt>
+File: images/rpi.jpg Graphic file (type jpg)
+ <use images/rpi.jpg>
+Package pdftex.def Info: images/rpi.jpg used on input line 127.
 (pdftex.def)             Requested size: 173.56177pt x 173.56364pt.
  [2]
-<system.png, id=22, 794.97pt x 509.905pt>
-File: system.png Graphic file (type png)
- <use system.png>
-Package pdftex.def Info: system.png used on input line 140.
+<images/system.png, id=22, 794.97pt x 509.905pt>
+File: images/system.png Graphic file (type png)
+ <use images/system.png>
+Package pdftex.def Info: images/system.png used on input line 140.
 (pdftex.def)             Requested size: 347.12354pt x 222.65495pt.
- [3 <./rpi.jpg> <./system.png>] (./interimreport.bbl
+
+[3 <./images/rpi.jpg> <./images/system.png>] (./interimreport.bbl
 Underfull \hbox (badness 10000) in paragraph at lines 17--21
 []\OT1/cmr/m/n/9 The New York Times.  Time de-vel-oper net-work - apis.
  []
@@ -667,8 +668,8 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 12963 strings out of 495028
- 271068 string characters out of 6181496
+ 12964 strings out of 495028
+ 271131 string characters out of 6181496
  346842 words of memory out of 5000000
  15879 multiletter control sequences out of 15000+600000
  6878 words of font info for 25 fonts, out of 8000000 for 9000
