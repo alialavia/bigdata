@@ -1,0 +1,46 @@
+\begin{thebibliography}{1}
+
+\bibitem{bingsearchapi}
+Microsoft.
+\newblock Bing search api.
+\newblock https://datamarket.azure.com/dataset/bing/search, Oct 2014.
+\newblock [Online; accessed 27-October-2014].
+
+\bibitem{scikit-learn}
+F.~Pedregosa, G.~Varoquaux, A.~Gramfort, V.~Michel, B.~Thirion, O.~Grisel,
+  M.~Blondel, P.~Prettenhofer, R.~Weiss, V.~Dubourg, J.~Vanderplas, A.~Passos,
+  D.~Cournapeau, M.~Brucher, M.~Perrot, and E.~Duchesnay.
+\newblock Scikit-learn: Machine learning in {P}ython.
+\newblock {\em Journal of Machine Learning Research}, 12:2825--2830, 2011.
+
+\bibitem{thenytimes}
+The New~York Times.
+\newblock Time developer network - apis.
+\newblock http://developer.nytimes.com/docs, Oct 2014.
+\newblock [Online; accessed 27-October-2014].
+
+\bibitem{twitterdocumentation}
+Twitter.
+\newblock Documentation.
+\newblock https://dev.twitter.com/overview/documentation, Oct 2014.
+\newblock [Online; accessed 27-October-2014].
+
+\bibitem{twitterstreaming}
+Twitter.
+\newblock The streaming api.
+\newblock https://dev.twitter.com/streaming/overview, Oct 2014.
+\newblock [Online; accessed 27-October-2014].
+
+\bibitem{twitterrestapi}
+Twitter.
+\newblock Twitter firehose.
+\newblock https://dev.twitter.com/streaming/reference/get/statuses/firehose,
+  Oct 2014.
+\newblock [Online; accessed 27-October-2014].
+
+\bibitem{wiki:raspberrypi}
+Wikipedia.
+\newblock Raspberry pi --- wikipedia{,} the free encyclopedia, 2014.
+\newblock [Online; accessed 27-October-2014].
+
+\end{thebibliography}

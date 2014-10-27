@@ -1,0 +1,61 @@
+This is BibTeX, Version 0.99d (TeX Live 2013/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: interimreport.aux
+The style file: plain.bst
+Database file #1: report.bib.bib
+Warning--entry type for "bingsearchapi" isn't style-file defined
+--line 31 of file report.bib.bib
+Warning--entry type for "thenytimes" isn't style-file defined
+--line 54 of file report.bib.bib
+Warning--entry type for "twitterdocumentation" isn't style-file defined
+--line 82 of file report.bib.bib
+Warning--entry type for "twitterrestapi" isn't style-file defined
+--line 96 of file report.bib.bib
+Repeated entry---line 110 of file report.bib.bib
+ : @electronic{twitterrestapi
+ :                           ,
+I'm skipping whatever remains of this entry
+Warning--entry type for "twitterstreaming" isn't style-file defined
+--line 124 of file report.bib.bib
+You've used 7 entries,
+            2118 wiz_defined-function locations,
+            529 strings with 4937 characters,
+and the built_in function-call counts, 2103 in all, are:
+= -- 194
+> -- 125
+< -- 0
++ -- 52
+- -- 44
+* -- 130
+:= -- 369
+add.period$ -- 26
+call.type$ -- 7
+change.case$ -- 43
+chr.to.int$ -- 0
+cite$ -- 7
+duplicate$ -- 53
+empty$ -- 161
+format.name$ -- 44
+if$ -- 427
+int.to.chr$ -- 0
+int.to.str$ -- 7
+missing$ -- 1
+newline$ -- 43
+num.names$ -- 14
+pop$ -- 66
+preamble$ -- 1
+purify$ -- 36
+quote$ -- 0
+skip$ -- 44
+stack$ -- 0
+substring$ -- 67
+swap$ -- 7
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 28
+warning$ -- 0
+while$ -- 16
+width$ -- 8
+write$ -- 83
+(There was 1 error message)
