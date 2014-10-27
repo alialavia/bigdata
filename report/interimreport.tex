@@ -16,6 +16,7 @@
 \begin{document}
 %
 \mainmatter              % start of the contributions
+\pretolerance=10000  % This avoids long lines
 \pagestyle{headings}
 
 %
@@ -52,11 +53,11 @@ We tackle this problem by taking the following steps:
   \item \textit{Labeling the tweets: }Label each tweet using the classifier we previously trained
 \end{enumerate}
 
-A big picture of the system is is depicted in Figure ~\ref{fig:A big picture of the system}. In the rest of this report we will elaborate the details of the system in more details.
+A big picture of the system is depicted in Figure ~\ref{fig:A big picture of the system}. In the rest of this report we will elaborate on the design and realization of the system.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\textwidth]{images/bigpicture.png}
+  \includegraphics[width=0.8\textwidth]{images/bigpicture.png} 
   \caption{A big picture of the system}
   \label{fig:A big picture of the system}
 \end{figure}
