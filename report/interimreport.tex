@@ -89,8 +89,17 @@ We tackle this problem by taking the following steps:
   \item \textit{Labeling the tweets: }Label each tweet using the classifier we previously trained
 \end{enumerate}
 
+A big picture of the system is is depicted in Figure ~\ref{fig:A big picture of the system}. In the rest of this report we will elaborate the details of the system in more details.
 
-In the rest of this report we elaborate these steps in more details.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{images/bigpicture1.png}
+  \caption{A big picture of the system}
+  \label{fig:A big picture of the system}
+\end{figure}
+
+
 
 \section{Data collection}
 \subsection{Data sources}
@@ -118,7 +127,7 @@ These categories are chosen due to the following facts:
 
 
 \subsection{Data storage}
-To use the streaming API, the data collecting script needs to send an initial request and then keep listening for the stream of responses. Thus, we need to keep the script running on a server, for a long period of time. Moreover, the API publishes more than 2000 tweets per second. This translates to around 20 gigabytes of tweets per day. This imposes a data storage problem, as our resources were rather limited at the first phase of the project. In order to address these issues, we managed to use one of the school's servers to run our script on. This server had around 200 GB of free space, which allows for almost 10 days of continous data collection. Moreover, we managed to use RAR compression to reduce the data size by a factor of 7. Moreover, since school servers are not the most reliable type of servers, we decided to take precautions by setting up a home-based Raspberry Pi ~\cite{wiki:raspberrypi} server and connecting it to a 1-terabyte external hard disk drive (See Figure ~\ref{fig:Raspberry Pi}). Using this setup, we are capable of collecting and storing around 350 days of twitter data using the \textit{Streaming API}:
+To use the streaming API, the data collecting script needs to send an initial request and then keep listening for the stream of responses. Thus, we need to keep the script running on a server, for a long period of time. Moreover, the API publishes more than 2000 tweets per second. This translates to around 20 gigabytes of tweets per day. This imposes a data storage problem, as our resources were rather limited at the first phase of the project. In order to address these issues, we managed to use one of the school's servers to run our script on. This server had around 200 GB of free space, which allows for almost 10 days of continous data collection. Moreover, we managed to use RAR ~\cite{wiki:RAR} compression to reduce the data size by a factor of 7. Moreover, since school servers are not the most reliable type of servers, we decided to take precautions by setting up a home-based Raspberry Pi ~\cite{wiki:raspberrypi} server and connecting it to a 1-terabyte external hard disk drive (See Figure ~\ref{fig:Raspberry Pi}). Using this setup, we are capable of collecting and storing around 350 days of twitter data using the \textit{Streaming API}:
 \[\textit{Days of tweet collection}=\frac{\textit{Storage size}\times \textit{Compression ratio}} {\textit{Size of tweets per day}}\]
 \[\frac{\textit{1000 GB} \times 7}{\textit{20 GB per day}}=\textit{350 days} \]
 
@@ -146,6 +155,7 @@ A detailed diagram of the system is seen in Figure \ref{fig:System diagram}.
 Python was used as the sole programming language of the project.
 In later steps we might use Java or Scala to scale the project.
 We used the Python machine learning package Scikit ~\cite{scikit-learn}, which significantly simplified development of the trainer. 
+[MORE HERE BY ALI, ROLF AND KEN]
 
 
 \bibliographystyle{plain}
