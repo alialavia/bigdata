@@ -5,44 +5,13 @@
 %
 \documentclass{llncs}
 %
-\usepackage{makeidx}  % allows for indexgeneration
+
 \usepackage{graphicx} % for importing images
 \usepackage{url} % for URL references
-\usepackage{float}
+\usepackage{float} % helps with locating the 
+\usepackage[T1]{fontenc}  % providing font encoding
 % used for drawing the diagrams
-\usepackage{tikz}
-\usetikzlibrary{calc,trees,positioning,arrows,chains,shapes.geometric,%
-    decorations.pathreplacing,decorations.pathmorphing,shapes,%
-    matrix,shapes.symbols}
 
-% defining diagram's style, just in case
-\tikzset{
->=stealth',
-  arrow/.style={
-    rectangle, 
-    rounded corners, 
-    % fill=black!10,
-    draw=black, very thick,
-    text width=10em, 
-    minimum height=3em, 
-    text centered, 
-    on chain},
-  line/.style={draw, thick, <-},
-  element/.style={
-    tape,
-    top color=white,
-    bottom color=blue!50!black!60!,
-    minimum width=8em,
-    draw=blue!40!black!90, very thick,
-    text width=10em, 
-    minimum height=3.5em, 
-    text centered, 
-    on chain},
-  every join/.style={->, thick,shorten >=1pt},
-  decoration={brace},
-  tuborg/.style={decorate},
-  tubnode/.style={midway, right=2pt},
-}
 %
 \begin{document}
 %
@@ -94,7 +63,7 @@ A big picture of the system is is depicted in Figure ~\ref{fig:A big picture of 
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\textwidth]{images/bigpicture1.png}
+  \includegraphics[width=0.8\textwidth]{images/bigpicture.png}
   \caption{A big picture of the system}
   \label{fig:A big picture of the system}
 \end{figure}
