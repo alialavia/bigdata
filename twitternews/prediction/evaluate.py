@@ -21,7 +21,7 @@ def main():
         X = []
         dates = []
         count = 0
-        for tweet in iterate_tweets(arguments.twitter_directory):
+        for tweet in keep_progress(iterate_tweets(arguments.twitter_directory)):
 
             # Grab 2000 tweets before classifying them
             dates.append(tweet["created_at"])
