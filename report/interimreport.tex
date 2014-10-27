@@ -78,7 +78,7 @@ Although Twitter Firehose ~\cite{twitterrestapi} offers access to all public twe
 
 
 \subsubsection{News data}
-We looked into different news agencies (CNN, BBC, USA Today, The New York Times,...) and news aggregators (Feedzilla, Google News, Bing Search, ...) in order to collect the required data for training the classifier. Unfortunately, all such sources impose some rather strict limitations on the number of requests and results an agent can send and recieve. As an example, Feedzilla has a limitation of 100 results per request. Bing news is also a commercial product costs of which we cannot afford! ~\cite{bingsearchapi}. Although we managed to collect a good amount of news using The New Your Times ~\cite{thenytimes} and USA Today ~\cite{thenytimes} APIs, we gave them up for a better news source: Twitter accounts of the news agencies. 
+We looked into different news agencies (CNN, BBC, Reuters, USA Today, The New York Times,...) and news aggregators (Feedzilla, Google News, Bing Search, ...) in order to collect the required data for training the classifier. Unfortunately, all such sources impose some rather strict limitations on the number of requests and results an agent can send and recieve. As an example, Feedzilla has a limitation of 100 results per request. Bing news is also a commercial product costs of which we cannot afford! ~\cite{bingsearchapi}. Although we managed to collect a good amount of news using The New Your Times ~\cite{thenytimes} and USA Today ~\cite{thenytimes} APIs, we gave them up for a better news source: Twitter accounts of the news agencies. 
 
 All news agencies that we looked for have different twitter accounts for different news categories. For the first phase of the project, we chose to use the following news categories:
 
@@ -94,9 +94,10 @@ These categories are chosen due to the following facts:
   \item The frequency of the news generated in these categories are significantly higher that other categories (couple of news every hour)
 \end{itemize}
 
+We currently use the following Twitter accounts as our news sources: \textit{@CNNPolitics, @BBCPolitics, @ReutersPolitics, @BBCSport, @WorldSportCNN, @ReutersSports, @BBCTech, @CNNtech, @ReutersTech}. Each account does not have more than some thousands of Tweets, and they do not Tweet more than a couple of news per hour.
 
 \subsection{Data storage}
-To use the streaming API, the data collecting script needs to send an initial request and then keep listening for the stream of responses. Thus, we need to keep the script running on a server, for a long period of time. Moreover, the API publishes more than 2000 tweets per second. This translates to around 20 gigabytes of tweets per day. This imposes a data storage problem, as our resources were rather limited at the first phase of the project. In order to address these issues, we managed to use one of the school's servers to run our script on. This server had around 200 GB of free space, which allows for almost 10 days of continous data collection. Moreover, we managed to use RAR ~\cite{wiki:RAR} compression to reduce the data size by a factor of 7. Moreover, since school servers are not the most reliable type of servers, we decided to take precautions by setting up a home-based Raspberry Pi ~\cite{wiki:raspberrypi} server and connecting it to a 1-terabyte external hard disk drive (See Figure ~\ref{fig:Raspberry Pi}). Using this setup, we are capable of collecting and storing around 350 days of twitter data using the \textit{Streaming API}:
+To use the streaming API, the data collecting script needs to send an initial request and then keep listening for the stream of responses. Thus, we need to keep the script running on a server for a long period of time. Moreover, the API publishes more than 2000 tweets per second. This translates to around 20 gigabytes of tweets per day. This imposes a data storage problem, as our resources were rather limited at the first phase of the project. In order to address these issues, we managed to use one of the school's servers to run our script on. This server have around 200 GB of free space, which allows for almost 10 days of continous data collection. Moreover, we managed to use RAR ~\cite{wiki:RAR} compression to reduce the data size by a factor of 7. Nevertheless, since school servers are not the most reliable type of servers, we decided to take some precautions by setting up a home-based Raspberry Pi ~\cite{wiki:raspberrypi} server and connecting it to a 1-terabyte external hard disk drive (See Figure ~\ref{fig:Raspberry Pi}). Using this setup, we are capable of collecting and storing around 350 days of twitter data using the \textit{Streaming API}:
 \[\textit{Days of tweet collection}=\frac{\textit{Storage size}\times \textit{Compression ratio}} {\textit{Size of tweets per day}}\]
 \[\frac{\textit{1000 GB} \times 7}{\textit{20 GB per day}}=\textit{350 days} \]
 
@@ -120,12 +121,18 @@ A detailed diagram of the system is seen in Figure \ref{fig:System diagram}.
   \label{fig:System diagram}
 \end{figure}
 
+The learner is the bottleneck of the system .... 
+
 \section{Tools, Languages and Libraries}
 Python was used as the sole programming language of the project.
 In later steps we might use Java or Scala to scale the project.
 We used the Python machine learning package Scikit ~\cite{scikit-learn}, which significantly simplified development of the trainer. 
 [MORE HERE BY ALI, ROLF AND KEN]
 
+\section{Results}
+
+\section{Conclusion and future work}
+In this report we presented the current status of a Twitter based news generator. We managed to label Tweets based on the classifier we trained using new 
 
 \bibliographystyle{plain}
 \bibliography{report.bib}
