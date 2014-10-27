@@ -24,7 +24,7 @@ def main():
     arguments = parser.parse_args()
 
     # Create iterators and stochastic gradient descent classifier (L1 regularized SVM)
-    sgd_classifier = SGDClassifier(alpha=1e-6, epsilon=0.1, n_jobs=4, penalty='l1', loss='modified_huber')
+    sgd_classifier = SGDClassifier(alpha=1e-6, epsilon=0.1, n_jobs=4, penalty='l1', loss='hinge')
     classes = ['other', 'sports', 'politics', 'technology']
     sports_tweets = iterate_tweets(arguments.sports_directory)
     politics_tweets = iterate_tweets(arguments.politics_directory)
