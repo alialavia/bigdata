@@ -13,3 +13,7 @@ logs/
 
 # Ignore log files
 *.log
+
+# Ignore backup files
+*.bak
+
