@@ -1,0 +1,5 @@
+\contentsline {title}{Automatic News Generation Based on Twitter}{2}
+\authcount {3}
+\contentsline {author}{Ali Alavi\unskip {} \and Rolf Jagerman \and Tsay Kai-En}{2}
+\contentsline {section}{\numberline {1}Introduction}{2}
+\contentsline {section}{\numberline {2}Methodology}{2}

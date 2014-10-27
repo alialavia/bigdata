@@ -1,0 +1,65 @@
+% This is LLNCS.DEM the demonstration file of
+% the LaTeX macro package from Springer-Verlag
+% for Lecture Notes in Computer Science,
+% version 2.4 for LaTeX2e as of 16. April 2010
+%
+\documentclass{llncs}
+%
+\usepackage{makeidx}  % allows for indexgeneration
+%
+\begin{document}
+%
+%
+
+%
+
+
+%
+\mainmatter              % start of the contributions
+%\tableofcontents
+%
+\title{Automatic News Generation Based on Twitter}
+%
+\titlerunning{Automatic News Generation Based on Twitter}  % abbreviated title (for running head)
+%                                     also used for the TOC unless
+%                                     \toctitle is used
+%
+\author{Ali Alavi\inst{1} \and Rolf Jagerman \and
+Tsay Kai-En}
+%
+\authorrunning{Ivar Ekeland et al.} % abbreviated author list (for running head)
+%
+%
+\institute{ETH Z\"urich, Z\"urich, Switzerland,\\
+\email{alavis@ethz.ch, rolfj@student.ethz.ch, tsayk@student.ethz.ch}}
+
+\maketitle              % typeset the title of the contribution
+%
+\section{Introduction}
+%
+This report presents the current status of the project \textbf{Automatic News Generation Based on Twitter}, 
+for \textbf{Big Data} course (code \textit{263-3010-00L}). This project tries to answer the following questions: 
+\textit{Can we automatically generate news headlines based on twitter posts? Can this method of news generation 
+perform better than the available news agencies, in terms of speed, reliability and so on?}
+
+\section{Methodology}
+Our basic idea for answering this question was to gather a large enough set of twitter posts and news articles for a learning algorithm, which should classify each twitter post as either \textit{News-worthy} or \textit{Not News-worthy}, based on the data learnt from the news posts. Since most news websites categorizes the news before providing it to the API, we decided to instead classify each twitter post into four distinct classes: 
+\begin{enumerate}
+\item Politics
+\item Sports
+\item Technology
+\item No news
+\end{enumerate}
+
+The three news categories (politics, sports and technology) are chosen due to two facts:
+\begin{itemize}
+\item There is not much overlap between these news categories (cf. business, technology, finance)
+\item These frequency of the news generated in these categories are significantly higher that other categories (couple of news every hour)
+\end{itemize}
+
+\section{Data Collection}
+\section{Tools: Languages, Libraries and Platforms}
+\begin{thebibliography}
+\bibitem
+\end{thebibliography}
+\end{document}
