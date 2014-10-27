@@ -42,3 +42,13 @@ def featurize(text):
     """
     return hasher.transform([text])[0]
 
+def featurize_all(list):
+    """
+    Processes list and generates feature vectors for all items
+
+    :param text: the list to process
+    :type text: str or unicode
+    :return: a sparse feature vector representing the text
+    :rtype: :class:`scipy.sparse.csr_matrix`
+    """
+    return hasher.transform(list)

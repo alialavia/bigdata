@@ -3,7 +3,7 @@ from sklearn.linear_model import SGDClassifier
 from twitternews.io import iterate_tweets
 from twitternews.util import keep_progress
 from itertools import izip_longest as zip_longest
-from twitternews.processing import featurize
+from twitternews.processing import featurize_all
 from pickle import dump
 
 
@@ -24,23 +24,39 @@ def main():
     arguments = parser.parse_args()
 
     # Create iterators and stochastic gradient descent classifier (L1 regularized SVM)
-    sgd_classifier = SGDClassifier(alpha=1e-6, epsilon=0.1, n_jobs=4, penalty='l1')
+    sgd_classifier = SGDClassifier(alpha=1e-6, epsilon=0.1, n_jobs=4, penalty='l1', loss='modified_huber')
     classes = ['sports', 'politics', 'technology']
     sports_tweets = iterate_tweets(arguments.sports_directory)
     politics_tweets = iterate_tweets(arguments.politics_directory)
     technology_tweets = iterate_tweets(arguments.technology_directory)
-    all_tweets = zip_longest(sports_tweets, politics_tweets, technology_tweets)
+    other_tweets = iterate_tweets(arguments.other_directory)
+    all_tweets = zip_longest(sports_tweets, politics_tweets, technology_tweets, other_tweets)
 
     # Process all tweets combined
-    for (sports_tweet, politics_tweet, technology_tweet) in keep_progress(all_tweets):
+    X = []
+    y = []
+    for (sports_tweet, politics_tweet, technology_tweet, other_tweet) in keep_progress(all_tweets):
         if sports_tweet is not None:
-            sgd_classifier.partial_fit(featurize(sports_tweet), ['sports'], classes)
+            X.append(sports_tweet['text'])
+            y.append('sports')
+            #sgd_classifier.partial_fit(featurize(sports_tweet['text']), ['sports'], classes)
         if politics_tweet is not None:
-            sgd_classifier.partial_fit(featurize(politics_tweet), ['politics'], classes)
+            X.append(politics_tweet['text'])
+            y.append('politics')
+            #sgd_classifier.partial_fit(featurize(politics_tweet['text']), ['politics'], classes)
         if technology_tweet is not None:
-            sgd_classifier.partial_fit(featurize(technology_tweet), ['technology'], classes)
+            X.append(technology_tweet['text'])
+            y.append('technology')
+        if other_tweet is not None:
+            X.append(other_tweet['text'])
+            y.append('other')
+            #sgd_classifier.partial_fit(featurize(technology_tweet['text']), ['technology'], classes)
+
+    sgd_classifier.fit(featurize_all(X), y)
 
     # Save classifier to a file so we can use this model later
+    print("Sparsity of coefficients: %.3f" % (float((sgd_classifier.coef_ == 0).sum()) / float(2**23)))
+    sgd_classifier.sparsify()
     with open(arguments.model, 'wb') as fid:
         dump(sgd_classifier, fid)
 

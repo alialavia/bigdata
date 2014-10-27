@@ -13,8 +13,9 @@ def main():
                         metavar='/path/to/twitter/files', help='The directory where twitter data files can be found')
     arguments = parser.parse_args()
 
-    for tweet in keep_progress(iterate_tweets(arguments.twitter_directory)):
-        vector = featurize(tweet['text'])
+    for tweet in iterate_tweets(arguments.twitter_directory):
+        print(tweet['text'].encode('UTF8'))
+        #vector = featurize(tweet['text'])
 
 
 if __name__ == "__main__":
