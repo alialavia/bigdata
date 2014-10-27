@@ -21,7 +21,7 @@ def main():
         X = []
         dates = []
         count = 0
-        for tweet in iterate_tweets(arguments.twitter_directory):
+        for tweet in keep_progress(iterate_tweets(arguments.twitter_directory)):
 
             # Grab 2000 tweets before classifying them
             dates.append(tweet["created_at"])
@@ -33,7 +33,6 @@ def main():
 
                 # Predict labels and probability scores
                 labels = sgd_classifier.predict(X_f)
-                proba = sgd_classifier.predict_proba(X_f)
 
                 # Iterate over all labels and only print out those that are not in 'other'
                 for idx, label in enumerate(labels):
