@@ -11,11 +11,13 @@ import matplotlib.pyplot as plt
 
 def confusion_matrix_plot(CM, classes, file):
     fig = plt.figure()
-    ax = fig.add_subplot(111)
-    cax = ax.matshow(CM, interpolation='nearest')
+    subfig = fig.add_subplot(111)
+    cax = subfig.matshow(CM, interpolation='nearest')
     fig.colorbar(cax)
-    ax.set_xticklabels(['']+classes)
-    ax.set_yticklabels(['']+classes)
+    subfig.set_xlabel('True labels', labelpad=-386)
+    subfig.set_ylabel('Predicted labels', labelpad=-2)
+    subfig.set_xticklabels(['']+classes)
+    subfig.set_yticklabels(['']+classes)
     plt.savefig(file, format='pdf')
 
 
