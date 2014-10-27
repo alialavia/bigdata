@@ -6,3 +6,6 @@
 
 # Ignore pycharm IDE
 .idea
+
+# Ignore data
+data/
