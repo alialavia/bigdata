@@ -1,9 +1,0 @@
-2014-10-26 20:05:56,106 - twitternews - INFO - Requesting from @BBCPolitics and write to data/twitter/politics/bbc
-2014-10-26 20:05:56,107 - twitternews - INFO - Requesting from @cnnpolitics and write to data/twitter/politics/cnn
-2014-10-26 20:05:56,107 - twitternews - INFO - Requesting from @ReutersPolitics and write to data/twitter/politics/reuters
-2014-10-26 20:05:56,107 - twitternews - INFO - Requesting from @BBCSport and write to data/twitter/sports/bbc
-2014-10-26 20:05:56,107 - twitternews - INFO - Requesting from @WorldSportCNN and write to data/twitter/sports/cnn
-2014-10-26 20:05:56,107 - twitternews - INFO - Requesting from @ReutersSports and write to data/twitter/sports/reuters
-2014-10-26 20:05:56,107 - twitternews - INFO - Requesting from @BBCTech and write to data/twitter/technology/bbc
-2014-10-26 20:05:56,107 - twitternews - INFO - Requesting from @cnntech and write to data/twitter/technology/cnn
-2014-10-26 20:05:56,107 - twitternews - INFO - Requesting from @ReutersTech and write to data/twitter/technology/reuters
