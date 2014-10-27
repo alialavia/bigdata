@@ -6,3 +6,10 @@
 
 # Ignore pycharm IDE
 .idea
+
+# Ignore data folders
+data/
+logs/
+
+# Ignore log files
+*.log

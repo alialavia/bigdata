@@ -24,8 +24,8 @@ def main():
     arguments = parser.parse_args()
 
     # Create iterators and stochastic gradient descent classifier (L1 regularized SVM)
-    sgd_classifier = SGDClassifier(alpha=1e-6, epsilon=0.1, n_jobs=4, penalty='l1', loss='modified_huber')
-    classes = ['sports', 'politics', 'technology']
+    sgd_classifier = SGDClassifier(alpha=1e-6, epsilon=0.1, n_jobs=4, penalty='l1', loss='hinge')
+    classes = ['other', 'sports', 'politics', 'technology']
     sports_tweets = iterate_tweets(arguments.sports_directory)
     politics_tweets = iterate_tweets(arguments.politics_directory)
     technology_tweets = iterate_tweets(arguments.technology_directory)
@@ -39,23 +39,30 @@ def main():
         if sports_tweet is not None:
             X.append(sports_tweet['text'])
             y.append('sports')
-            #sgd_classifier.partial_fit(featurize(sports_tweet['text']), ['sports'], classes)
         if politics_tweet is not None:
             X.append(politics_tweet['text'])
             y.append('politics')
-            #sgd_classifier.partial_fit(featurize(politics_tweet['text']), ['politics'], classes)
         if technology_tweet is not None:
             X.append(technology_tweet['text'])
             y.append('technology')
         if other_tweet is not None:
             X.append(other_tweet['text'])
             y.append('other')
-            #sgd_classifier.partial_fit(featurize(technology_tweet['text']), ['technology'], classes)
+        if sports_tweet is None and politics_tweet is None and technology_tweets is None:
+            break
 
-    sgd_classifier.fit(featurize_all(X), y)
+        # Perform a partial fit in batches of 1000 tweets
+        if len(X) >= 1000:
+            sgd_classifier.partial_fit(featurize_all(X), y, classes)
+            X = []
+            y = []
+
+    # Fit remainder that was not yet processed
+    if len(X) > 0:
+        sgd_classifier.partial_fit(featurize_all(X), y, classes)
 
     # Save classifier to a file so we can use this model later
-    print("Sparsity of coefficients: %.3f" % (float((sgd_classifier.coef_ == 0).sum()) / float(2**23)))
+    print("Saving classifier to file")
     sgd_classifier.sparsify()
     with open(arguments.model, 'wb') as fid:
         dump(sgd_classifier, fid)

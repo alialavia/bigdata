@@ -1,8 +1,0 @@
-http://developer.nytimes.com/docs
-http://developer.nytimes.com/docs/read/article_search_api_v2
-http://developer.nytimes.com/docs/times_newswire_api/
-
-example api with keys:
-http://api.nytimes.com/svc/search/v2/articlesearch.json?q=earthquake&page=0&source=nyt&sort=newest&api-key=5c2e019a561730d3064c79c46141e07c:3:69854008
-http://api.nytimes.com/svc/news/v3/content/all/all.json?api-key=7ab9f172013a49a87d5e915a496c4468:17:69854008&offset=100
-http://api.nytimes.com/svc/news/v3/content/section-list.json?api-key=7ab9f172013a49a87d5e915a496c4468:17:69854008

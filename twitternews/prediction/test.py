@@ -19,10 +19,12 @@ def main():
     with open(arguments.model, 'r') as fid:
         sgd_classifier = load(fid)
         X = []
+        dates = []
         count = 0
         for tweet in keep_progress(iterate_tweets(arguments.twitter_directory)):
 
             # Grab 2000 tweets before classifying them
+            dates.append(tweet["created_at"])
             X.append(tweet['text'])
             count += 1
             if count >= 2000:
@@ -31,16 +33,16 @@ def main():
 
                 # Predict labels and probability scores
                 labels = sgd_classifier.predict(X_f)
-                proba = sgd_classifier.predict_proba(X_f)
 
                 # Iterate over all labels and only print out those that are not in 'other'
                 for idx, label in enumerate(labels):
                     if label != 'other':
-                        lprintln(label + " :: " + X[idx].encode('UTF8') + " (score:" + str(proba[idx]) + ")")
+                        lprintln(label + " :: " + X[idx].encode('UTF8') + " (" + str(dates[idx]) + ")")
                         lprintln("")
 
                 # Reset for next 2000 tweets
                 X = []
+                dates = []
                 count = 0
 
 
