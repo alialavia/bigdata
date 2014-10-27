@@ -8,6 +8,10 @@
 %
 
 \usepackage{graphicx} % for importing images
+
+\usepackage{subcaption} % for subfigures
+\captionsetup{compatibility=false} % to make subfigures compatible with template
+
 \usepackage{url} % for URL references
 \usepackage{float} % helps with locating the 
 \usepackage[T1]{fontenc}  % providing font encoding
@@ -100,11 +104,20 @@ To use the streaming API, the data collecting script needs to send an initial re
   \label{fig:Raspberry Pi}
 \end{figure}
 
-\section{How to train your classifier}
+\section{Classification of tweets}
+To select relevant tweets from the massive amount of twitter data, we will have to classify the tweets. By accurately assigning labels to tweets that describe their topic, we can find tweets that are about interesting news topics, such as "sports", "technology" or "politics".
 
-[CONTENT BY ROLF \& ALI]
+\subsection{Feature extraction}
+Traditionally, one would have to build a dictionary of the entire corpus that is being classified before being able to turn samples into feature vectors that can be used by a classifier. This would require at least one pass over the entire data set. We wish to prevent having to iterate over the entire data set multiple times as this would be time consuming. To this end, feature hashing is used to turn text into feature vectors without requiring a dictionary. The text is tokenized, stemmed and then hashed by a fast non-cryptographic hashing algorithm into a sparse feature vector. By choosing a sufficiently large feature space we minimize the risk of collisions. The generated feature vectors can then be used by a classifier.
 
-A detailed diagram of the system is seen in Figure \ref{fig:System diagram}.
+\subsection{Choice of classifier}
+The training data, which is obtained from the news agencies, is assigned the appropriate labels and processed by a stochastic gradient descent classifier. This type of classifier can converge on a solution without having to load the entire dataset into memory. This made it a great choice for this project, as we expect the data to grow beyond the memory bounds of a standard computer.
+
+\subsection{Labeling tweets}
+After the classifier finishes training it outputs a model that can be used to label tweets. These tweets get the same preprocessing as the training data and are tokenized, stemmed and turned into feature vectors. The classifier then proceeds to predict the labels based on these feature vectors. Labeling tweets in this way is fast enough to keep up with the public sample stream of twitter on a single laptop. Furthermore, the labeling process is trivial to scale. By copying the model to different machines, and assigning different parts of the data to these machines, we can label a large amount of data.
+
+\subsection{System overview}
+A detailed diagram of the system is seen in Figure \ref{fig:System diagram}. The bottleneck of the system is the training process. The process of learning is difficult to scale.
 
 \begin{figure}[H]
   \centering
@@ -113,8 +126,6 @@ A detailed diagram of the system is seen in Figure \ref{fig:System diagram}.
   \label{fig:System diagram}
 \end{figure}
 
-The learner is the bottleneck of the system .... 
-
 \section{Tools, Languages and Libraries}
 Python was used as the sole programming language of the project.
 In later steps we might use Java or Scala to scale the project.
@@ -122,6 +133,36 @@ We used the Python machine learning package Scikit ~\cite{scikit-learn}, which s
 [MORE HERE BY ALI, ROLF AND KEN]
 
 \section{Results}
+To measure the quality of the classifier we use several known metrics for multi-class classification. Precision, Recall and F1-Score are good indicators for the behavior of each class. Confusion matrices give quick insight in the performance of classes relative to each other.
+
+\begin{table}
+\begin{center}
+\begin{tabular}{|r|r|r|r|r|} \hline
+class  & precision   & recall & f1-score  & support \\ \hline
+ technology    &   1.00 &     0.08  &    0.14   &   6195 \\
+     sports   &    1.00   &   0.03   &   0.07   &   6365 \\
+   politics   &    1.00  &    0.10   &   0.18   &   6376 \\
+      other   &    0.79 &     1.00  &    0.88   &  65725 \\ \hline
+avg / total  &     0.84   &   0.79  &    0.71   &  84661 \\ \hline
+\end{tabular}
+\end{center}
+\caption{Classification performance over the three trained categories}
+\label{tbl:classification-report}
+\end{table}
+ 
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{images/high-precision.pdf}
+        \caption{Column-normalized confusion matrix.}
+        \label{fig:column-confusion-matrix}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{images/low-recall.pdf}
+        \caption{Row-normalized confusion matrix.}
+        \label{fig:row-confusion-matrix}
+    \end{subfigure}
+ \end{figure}
 
 \section{Conclusion and future work}
 In this report we presented the current status of a Twitter based news generator. We managed to label Tweets based on the classifier we trained using new 
