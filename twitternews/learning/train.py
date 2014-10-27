@@ -24,7 +24,7 @@ def main():
     arguments = parser.parse_args()
 
     # Create iterators and stochastic gradient descent classifier (L1 regularized SVM)
-    sgd_classifier = SGDClassifier(alpha=1e-6, epsilon=0.1, n_jobs=4, penalty='l1', loss='hinge')
+    sgd_classifier = SGDClassifier(alpha=1e-6, epsilon=0.1, n_jobs=4, penalty='l1', loss='modified_huber')
     classes = ['other', 'sports', 'politics', 'technology']
     sports_tweets = iterate_tweets(arguments.sports_directory)
     politics_tweets = iterate_tweets(arguments.politics_directory)
@@ -48,6 +48,8 @@ def main():
         if other_tweet is not None:
             X.append(other_tweet['text'])
             y.append('other')
+        if sports_tweet is None and politics_tweet is None and technology_tweets is None:
+            break
 
         # Perform a partial fit in batches of 1000 tweets
         if len(X) >= 1000:
