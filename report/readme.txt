@@ -1,17 +1,16 @@
-Dear LLNCS user,
+This directory contains our interim report LATEX file (intermreport.tex), 
+together with all of its bells and whistles, i.e. images, bibliography (report.bib) and so on.
 
-The files in this directory belong to the LaTeX2e package for
+You only need to work on the abovementioned files. In particular,
+the directory use the LaTeX2e package for
 Lecture Notes in Computer Science (LNCS) of Springer-Verlag.
-
-It consists of the following files:
-
-  readme.txt         this file
+The following files belong to the package and better to remain untouched:
 
   history.txt        the version history of the package
 
   llncs.cls          the LaTeX2e document class
 
-  llncs.dem          the sample input file
+  llncs.tex          the sample input file
 
   llncs.doc          the documentation of the class (LaTeX source)
   llncsdoc.pdf       the documentation of the class (PDF version)
