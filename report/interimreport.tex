@@ -135,6 +135,10 @@ We used the Python machine learning package Scikit ~\cite{scikit-learn}, which s
 \section{Results}
 To measure the quality of the classifier we use several known metrics for multi-class classification. Precision, Recall and F1-Score are good indicators for the behavior of each class. Confusion matrices give quick insight in the performance of classes relative to each other.
 
+The precision, recall and f1-score of the three classifiers are shown in table \ref{tbl:classification-report} and they all display the same behavior. The classifiers are overly conservative in their predictions. This means that the predictions are trustworthy, they have a high precision. However, a lot of possibly relevant tweets are not given by these classifiers, there is a low recall. In other words, we have a lot of false negatives. 
+
+This behavior becomes even more clear in the confusion matrices displayed in figure \ref{fig:confusion-matrix}. The column-normalized confusion matrix shows that when a tweet gets classified into the categories "technology", "sports" and "politics", it is a very good prediction. The row-normalized confusion matrix however shows that a lot of tweets that should actually be in "technology", "sports" or "politics" are classified as "other".
+
 \begin{table}
 \begin{center}
 \begin{tabular}{|r|r|r|r|r|} \hline
@@ -162,7 +166,11 @@ avg / total  &     0.84   &   0.79  &    0.71   &  84661 \\ \hline
         \caption{Row-normalized confusion matrix.}
         \label{fig:row-confusion-matrix}
     \end{subfigure}
+    \caption{Confusion matrices of the three classifiers.}
+    \label{fig:confusion-matrix}
  \end{figure}
+ 
+It is important to filter out the noise in order to get good news-relevant tweets. Due to the large amount of data, an overly conservative classifier is not necessarily a bad thing. Even though we might be missing a lot of relevant tweets, we are still getting a large amount of useful predictions.
 
 \section{Conclusion and future work}
 In this report we presented the current status of a Twitter based news generator. We managed to label Tweets based on the classifier we trained using new 
