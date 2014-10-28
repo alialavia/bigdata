@@ -21,7 +21,7 @@ def main():
         X = []
         dates = []
         count = 0
-        for tweet in keep_progress(iterate_tweets(arguments.twitter_directory)):
+        for tweet in iterate_tweets(arguments.twitter_directory):
 
             # Grab 2000 tweets before classifying them
             dates.append(tweet["created_at"])
@@ -37,8 +37,7 @@ def main():
                 # Iterate over all labels and only print out those that are not in 'other'
                 for idx, label in enumerate(labels):
                     if label != 'other':
-                        lprintln(label + " :: " + X[idx].encode('UTF8') + " (" + str(dates[idx]) + ")")
-                        lprintln("")
+                        lprintln(str(dates[idx])[:19] + " :: " + label + " :: " + ' '.join(X[idx].encode('UTF8').splitlines()))
 
                 # Reset for next 2000 tweets
                 X = []
