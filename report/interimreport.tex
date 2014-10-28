@@ -93,16 +93,16 @@ These categories are chosen due to the following facts:
 We currently use the following Twitter accounts as our news sources: \textit{@CNNPolitics, @BBCPolitics, @ReutersPolitics, @BBCSport, @WorldSportCNN, @ReutersSports, @BBCTech, @CNNtech, @ReutersTech}. Each account does not have more than some thousands of Tweets, and they do not Tweet more than a couple of news per hour.
 
 \subsection{Data storage}
-To use the streaming API, the data collecting script needs to send an initial request and then keep listening for the stream of responses. Thus, we need to keep the script running on a server for a long period of time. Moreover, the API publishes more than 2000 tweets per second. This translates to around 20 gigabytes of tweets per day. This imposes a data storage problem, as our resources were rather limited at the first phase of the project. In order to address these issues, we managed to use one of the school's servers to run our script on. This server have around 200 GB of free space, which allows for almost 10 days of continous data collection. Moreover, we managed to use RAR ~\cite{wiki:RAR} compression to reduce the data size by a factor of 7. Nevertheless, since school servers are not the most reliable type of servers, we decided to take some precautions by setting up a home-based Raspberry Pi ~\cite{wiki:raspberrypi} server and connecting it to a 1-terabyte external hard disk drive (See Figure ~\ref{fig:Raspberry Pi}). Using this setup, we are capable of collecting and storing around 350 days of twitter data using the \textit{Streaming API}:
+To use the streaming API, the data collecting script needs to send an initial request and then keep listening for the stream of responses. Thus, we need to keep the script running on a server for a long period of time. Moreover, the API publishes more than 2000 tweets per second. This translates to around 20 gigabytes of tweets per day. This imposes a data storage problem, as our resources were rather limited at the first phase of the project. In order to address these issues, we managed to use one of the school's servers to run our script on. This server have around 200 GB of free space, which allows for almost 10 days of continous data collection. Moreover, we managed to use RAR ~\cite{wiki:RAR} compression to reduce the data size by a factor of 7. Nevertheless, since school servers are not the most reliable type of servers, we decided to take some precautions by setting up a home-based Raspberry Pi ~\cite{wiki:raspberrypi} server and connecting it to a 1-terabyte external hard disk drive. Using this setup, we are capable of collecting and storing around 350 days of twitter data using the \textit{Streaming API}:
 \[\textit{Days of tweet collection}=\frac{\textit{Storage size}\times \textit{Compression ratio}} {\textit{Size of tweets per day}}\]
 \[\frac{\textit{1000 GB} \times 7}{\textit{20 GB per day}}=\textit{350 days} \]
 
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.5\textwidth]{images/rpi.jpg}
-  \caption{Raspberry Pi Setup / Image to be updated by Ali}
-  \label{fig:Raspberry Pi}
-\end{figure}
+%\begin{figure}[H]
+%  \centering
+%  \includegraphics[width=0.5\textwidth]{images/rpi.jpg}
+%  \caption{Raspberry Pi Setup / Image to be updated by Ali}
+%  \label{fig:Raspberry Pi}
+%\end{figure}
 
 \section{Classification of tweets}
 To select relevant tweets from the massive amount of twitter data, we will have to classify the tweets. By accurately assigning labels to tweets that describe their topic, we can find tweets that are about interesting news topics, such as "sports", "technology" or "politics".
@@ -113,11 +113,8 @@ Traditionally, one would have to build a dictionary of the entire corpus that is
 \subsection{Choice of classifier}
 The training data, which is obtained from the news agencies, is assigned the appropriate labels and processed by a stochastic gradient descent classifier. This type of classifier can converge on a solution without having to load the entire dataset into memory. This made it a great choice for this project, as we expect the data to grow beyond the memory bounds of a standard computer.
 
-\subsection{Labeling tweets}
-After the classifier finishes training it outputs a model that can be used to label tweets. These tweets get the same preprocessing as the training data and are tokenized, stemmed and turned into feature vectors. The classifier then proceeds to predict the labels based on these feature vectors. Labeling tweets in this way is fast enough to keep up with the public sample stream of twitter on a single laptop. Furthermore, the labeling process is trivial to scale. By copying the model to different machines, and assigning different parts of the data to these machines, we can label a large amount of data.
-
 \subsection{System overview}
-A detailed diagram of the system is seen in Figure \ref{fig:System diagram}. The bottleneck of the system is the training process. The process of learning is difficult to scale.
+A detailed diagram of the system is seen in Figure \ref{fig:System diagram}. The bottleneck of the system is the learning process, which is difficult to scale.
 
 \begin{figure}[H]
   \centering
