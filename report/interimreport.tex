@@ -22,6 +22,7 @@
 \mainmatter              % start of the contributions
 \pretolerance=10000  % This avoids long lines
 \pagestyle{headings}
+%\hyphenation{}
 
 %
 \title{Automatic News Generation Based on Twitter}
@@ -91,7 +92,7 @@ These categories are chosen due to the following facts:
   \item The frequency of the news generated in these categories are significantly higher that other categories (couple of news every hour)
 \end{itemize}
 
-We currently use the following Twitter accounts as our news sources: \textit{@CNNPolitics, @BBCPolitics, @ReutersPolitics, @BBCSport, @WorldSportCNN, @ReutersSports, @BBCTech, @CNNtech, @ReutersTech}. Each account does not have more than some thousands of Tweets, and they do not Tweet more than a couple of news per hour.
+We currently use the following Twitter accounts as our news sources: @CNNPolitics, @BBCPolitics, @ReutersPolitics, @BBCSport, @WorldSportCNN, @ReutersSports, @BBCTech, @CNNtech, @ReutersTech. Each account does not have more than some thousands of Tweets, and they do not Tweet more than a couple of news per hour.
 
 \subsection{Data storage}
 To use the streaming API, the data collecting script needs to send an initial request and then keep listening for the stream of responses. Thus, we need to keep the script running on a server for a long period of time. Moreover, the API publishes more than 2000 tweets per second. This translates to around 20 gigabytes of tweets per day. This imposes a data storage problem, as our resources were rather limited at the first phase of the project. In order to address these issues, we managed to use one of the school's servers to run our script on. This server have around 200 GB of free space, which allows for almost 10 days of continous data collection. Moreover, we managed to use RAR ~\cite{wiki:RAR} compression to reduce the data size by a factor of 7. Nevertheless, since school servers are not the most reliable type of servers, we decided to take some precautions by setting up a home-based Raspberry Pi ~\cite{wiki:raspberrypi} server and connecting it to a 1-terabyte external hard disk drive. Using this setup, we are capable of collecting and storing around 350 days of twitter data using the \textit{Streaming API}:
