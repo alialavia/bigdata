@@ -164,10 +164,10 @@ avg / total  &     0.84   &   0.79  &    0.71   &  84661 \\ \hline
  
 Due to the large amount of data, an overly conservative classifier is not necessarily a bad thing: even though we might be missing a lot of relevant tweets, we are still getting a large amount of useful predictions. 
 
-\section{Future Works}
+\section{Future work}
 The data size we worked on for the proof of concept phase is relatively small. For the next step of the project, we want to scale up the data size and add more features to enhance the news classifiers. 
 
-We planned to run the massive data set on Spark and use MLlib, which is a Spark implementation of some common machine learning (ML) functionalities for massive data classification. Porting the training and prediction process to Spark will be the challenge that we need to address in this phase. Another challenge will be optimizing the weights of the features, such as numbers of followers and numbers of twitts, to enhance the news classifiers.
+We plan to run the massive data set on Spark and use MLlib, which is a Spark implementation of some common machine learning (ML) functionalities for massive data classification. Porting the training and prediction processes to Spark will be the challenge that we need to address in this phase. Another challenge will be optimizing the classifiers by giving different weights to the tweets, based on features like numbers of retweets, followers, and so on.
 
 \bibliographystyle{plain}
 \bibliography{report.bib}
