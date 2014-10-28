@@ -1,14 +1,14 @@
 % This file is the Latex source of the Big Data course project
 % report. The project contributors are Ali Alavi, Rolf jagerman
 % and Ken Tsay.
-% The report is written by Ali Alavi.
+% The report is written by Ali Alavi, Rolf Jagerman.
 
 %
 \documentclass{llncs}
 %
 
 \usepackage{graphicx} % for importing images
-
+\usepackage{caption}
 \usepackage{subcaption} % for subfigures
 \captionsetup{compatibility=false} % to make subfigures compatible with template
 
@@ -67,6 +67,7 @@ A big picture of the system is depicted in Figure ~\ref{fig:A big picture of the
 \end{figure}
 
 \section{Data collection}
+We used different data sources and data storage systems. All the data collection tasks were performed using Python script.
 \subsection{Data sources}
 \subsubsection{Twitter data}
 Twitter offer different ways of gathering data for different applications ~\cite{twitterdocumentation}. Unfortunately, giving access to the historic data is not one of them. In other words, our access to public data is limited to the most recent tweets. Hence, we decided to collect a large number of the most recent public tweets. 
@@ -105,7 +106,7 @@ To use the streaming API, the data collecting script needs to send an initial re
 %\end{figure}
 
 \section{Classification of tweets}
-To select relevant tweets from the massive amount of twitter data, we will have to classify the tweets. By accurately assigning labels to tweets that describe their topic, we can find tweets that are about interesting news topics, such as "sports", "technology" or "politics".
+To select relevant tweets from the massive amount of twitter data, we will have to classify the tweets. By accurately assigning labels to tweets that describe their topic, we can find tweets that are about interesting news topics, such as "sports", "technology" or "politics". We used a Python machine learning package, Scikit ~\cite{scikit-learn}, which significantly simplified development of the classifier. 
 
 \subsection{Feature extraction}
 Traditionally, one would have to build a dictionary of the entire corpus that is being classified before being able to turn samples into feature vectors that can be used by a classifier. This would require at least one pass over the entire data set. We wish to prevent having to iterate over the entire data set multiple times as this would be time consuming. To this end, feature hashing is used to turn text into feature vectors without requiring a dictionary. The text is tokenized, stemmed and then hashed by a fast non-cryptographic hashing algorithm into a sparse feature vector. By choosing a sufficiently large feature space we minimize the risk of collisions. The generated feature vectors can then be used by a classifier.
@@ -122,12 +123,6 @@ A detailed diagram of the system is seen in Figure \ref{fig:System diagram}. The
   \caption{System diagram}
   \label{fig:System diagram}
 \end{figure}
-
-\section{Tools, Languages and Libraries}
-Python was used as the sole programming language of the project.
-In later steps we might use Java or Scala to scale the project.
-We used the Python machine learning package Scikit ~\cite{scikit-learn}, which significantly simplified development of the trainer. 
-[MORE HERE BY ALI, ROLF AND KEN]
 
 \section{Results}
 To measure the quality of the classifier we use several known metrics for multi-class classification. Precision, Recall and F1-Score are good indicators for the behavior of each class. Confusion matrices give quick insight in the performance of classes relative to each other.
@@ -168,9 +163,6 @@ avg / total  &     0.84   &   0.79  &    0.71   &  84661 \\ \hline
  \end{figure}
  
 It is important to filter out the noise in order to get good news-relevant tweets. Due to the large amount of data, an overly conservative classifier is not necessarily a bad thing. Even though we might be missing a lot of relevant tweets, we are still getting a large amount of useful predictions.
-
-\section{Conclusion and future work}
-In this report we presented the current status of a Twitter based news generator. We managed to label Tweets based on the classifier we trained using new 
 
 \bibliographystyle{plain}
 \bibliography{report.bib}
