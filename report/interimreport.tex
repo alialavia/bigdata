@@ -127,9 +127,7 @@ The labeled training data (the news headlines) are processed by a stochastic gra
 
 \section{Results}
 
-To measure the quality of the classifier, we set aside a part of our training data and use that as test data. On this test data we perform several metrics, such as precision, recall and F1-score.
-
-The precision, recall and F1-score of the three classifiers are shown in table \ref{tbl:classification-report} and they all display the same behavior: the classifiers are overly conservative in their predictions. This means that the predictions are trustworthy as evidence by a high precision metric. However, a lot of possibly relevant tweets are not given by these classifiers, which results in a low recall. In other words, we have a lot of false negatives. 
+To measure the quality of the classifier, we set aside a part of our training data and use that as test data. On this test data we measure several metrics, such as precision, recall and F1-score. These are presented in table \ref{tbl:classification-report} and they all display the same behavior: the classifiers are overly conservative in their predictions. This means that the predictions are trustworthy as evidence by a high precision metric. However, a lot of possibly relevant tweets are not given by these classifiers, which results in a low recall. In other words, we have a lot of false negatives. 
 
 This behavior becomes even more clear in the confusion matrices displayed in figure \ref{fig:confusion-matrix}. The column-normalized confusion matrix shows that when a tweet gets classified into the categories "technology", "sports" and "politics", it is a very good prediction. In contrast, a lot of tweets that should actually be in "technology", "sports" or "politics" are classified as "other", as seen in the row-normalized confusion matrix.
 
