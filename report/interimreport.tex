@@ -116,7 +116,7 @@ To select relevant tweets from the massive amount of twitter data, we will have 
 Traditionally, one would have to build a dictionary of the entire corpus that is being classified before being able to turn samples into feature vectors that can be used by a classifier. This would require at least one pass over the entire data set. We wish to prevent iterating over the entire data set multiple times, as this would be time consuming. To this end, feature hashing is used to turn texts into feature vectors without requiring a dictionary. The text is tokenized, stemmed and then hashed by a fast non-cryptographic hashing algorithm into a sparse feature vector. By choosing a sufficiently large feature space we minimize the risk of collisions. The generated feature vectors can then be used by a classifier.
 
 \subsubsection{Choice of classifier}
-The labeled training data (the news headlines) are processed by a stochastic gradient descent classifier. This type of classifier can converge to a solution without having to load the entire dataset into memory. This made it a great choice for this project, as we expect the data to grow beyond the memory bounds of a standard computer.
+The labeled training data (the news headlines) are processed by a stochastic gradient descent classifier. This type of classifier can converge to a solution without having to load the entire data set into memory. This made it a great choice for this project, as we expect the data to grow beyond the memory bounds of a standard computer.
 
 \begin{figure}[H]
   \centering
@@ -163,6 +163,11 @@ avg / total  &     0.84   &   0.79  &    0.71   &  84661 \\ \hline
  \end{figure}
  
 Due to the large amount of data, an overly conservative classifier is not necessarily a bad thing: even though we might be missing a lot of relevant tweets, we are still getting a large amount of useful predictions. 
+
+\section{Future Works}
+The data size we worked on for the proof of concept phase is relatively small. For the next step of the project, we want to scale up the data size and add more features to enhance the news classifiers. 
+
+We planned to run the massive data set on Spark and use MLlib, which is a Spark implementation of some common machine learning (ML) functionalities for massive data classification. Porting the training and prediction process to Spark will be the challenge that we need to address in this phase. Another challenge will be optimizing the weights of the features, such as numbers of followers and numbers of twitts, to enhance the news classifiers.
 
 \bibliographystyle{plain}
 \bibliography{report.bib}
