@@ -106,17 +106,17 @@ To use the streaming API, the data collecting script needs to send an initial re
 %  \label{fig:Raspberry Pi}
 %\end{figure}
 
-\section{Classification of tweets}
-To select relevant tweets from the massive amount of twitter data, we will have to classify the tweets. By accurately assigning labels to tweets that describe their topic, we can find tweets that are about interesting news topics, such as "sports", "technology" or "politics". We used a Python machine learning package, Scikit ~\cite{scikit-learn}, which significantly simplified development of the classifier. 
+\section{Design of the system}
 
-\subsection{Feature extraction}
-Traditionally, one would have to build a dictionary of the entire corpus that is being classified before being able to turn samples into feature vectors that can be used by a classifier. This would require at least one pass over the entire data set. We wish to prevent having to iterate over the entire data set multiple times as this would be time consuming. To this end, feature hashing is used to turn text into feature vectors without requiring a dictionary. The text is tokenized, stemmed and then hashed by a fast non-cryptographic hashing algorithm into a sparse feature vector. By choosing a sufficiently large feature space we minimize the risk of collisions. The generated feature vectors can then be used by a classifier.
+To select relevant tweets from the massive amount of twitter data, we will have to classify the tweets. By accurately assigning labels to tweets that describe their topics, we can find tweets that belong to our selected categories, i.e. "sports", "technology" or "politics". We used a Python machine learning package, Scikit ~\cite{scikit-learn}, which significantly simplified development of the classifier. A detailed diagram of the system is seen in Figure \ref{fig:System diagram}. 
 
-\subsection{Choice of classifier}
-The training data, which is obtained from the news agencies, is assigned the appropriate labels and processed by a stochastic gradient descent classifier. This type of classifier can converge on a solution without having to load the entire dataset into memory. This made it a great choice for this project, as we expect the data to grow beyond the memory bounds of a standard computer.
+\subsection{Classification}
 
-\subsection{System overview}
-A detailed diagram of the system is seen in Figure \ref{fig:System diagram}. The bottleneck of the system is the learning process, which is difficult to scale.
+\subsubsection{Feature extraction}
+Traditionally, one would have to build a dictionary of the entire corpus that is being classified before being able to turn samples into feature vectors that can be used by a classifier. This would require at least one pass over the entire data set. We wish to prevent iterating over the entire data set multiple times, as this would be time consuming. To this end, feature hashing is used to turn texts into feature vectors without requiring a dictionary. The text is tokenized, stemmed and then hashed by a fast non-cryptographic hashing algorithm into a sparse feature vector. By choosing a sufficiently large feature space we minimize the risk of collisions. The generated feature vectors can then be used by a classifier.
+
+\subsubsection{Choice of classifier}
+The labeled training data (the news headlines) are processed by a stochastic gradient descent classifier. This type of classifier can converge to a solution without having to load the entire dataset into memory. This made it a great choice for this project, as we expect the data to grow beyond the memory bounds of a standard computer.
 
 \begin{figure}[H]
   \centering
@@ -126,11 +126,10 @@ A detailed diagram of the system is seen in Figure \ref{fig:System diagram}. The
 \end{figure}
 
 \section{Results}
-To measure the quality of the classifier we use several known metrics for multi-class classification. Precision, Recall and F1-Score are good indicators for the behavior of each class. Confusion matrices give quick insight in the performance of classes relative to each other.
 
-The precision, recall and f1-score of the three classifiers are shown in table \ref{tbl:classification-report} and they all display the same behavior. The classifiers are overly conservative in their predictions. This means that the predictions are trustworthy, they have a high precision. However, a lot of possibly relevant tweets are not given by these classifiers, there is a low recall. In other words, we have a lot of false negatives. 
+The precision, recall and F1-score of the three classifiers are shown in table \ref{tbl:classification-report} and they all display the same behavior: the classifiers are overly conservative in their predictions. This means that the predictions are trustworthy as evidence by a high precision metric. However, a lot of possibly relevant tweets are not given by these classifiers, which results in a low recall. In other words, we have a lot of false negatives. 
 
-This behavior becomes even more clear in the confusion matrices displayed in figure \ref{fig:confusion-matrix}. The column-normalized confusion matrix shows that when a tweet gets classified into the categories "technology", "sports" and "politics", it is a very good prediction. The row-normalized confusion matrix however shows that a lot of tweets that should actually be in "technology", "sports" or "politics" are classified as "other".
+This behavior becomes even more clear in the confusion matrices displayed in figure \ref{fig:confusion-matrix}. The column-normalized confusion matrix shows that when a tweet gets classified into the categories "technology", "sports" and "politics", it is a very good prediction. In contrast, a lot of tweets that should actually be in "technology", "sports" or "politics" are classified as "other", as seen in the row-normalized confusion matrix.
 
 \begin{table}
 \begin{center}
@@ -151,19 +150,19 @@ avg / total  &     0.84   &   0.79  &    0.71   &  84661 \\ \hline
     \centering
     \begin{subfigure}[b]{0.48\textwidth}
         \includegraphics[width=\textwidth]{images/high-precision.pdf}
-        \caption{Column-normalized confusion matrix.}
+        \caption{Column-normalized confusion matrix}
         \label{fig:column-confusion-matrix}
     \end{subfigure}
     \begin{subfigure}[b]{0.48\textwidth}
         \includegraphics[width=\textwidth]{images/low-recall.pdf}
-        \caption{Row-normalized confusion matrix.}
+        \caption{Row-normalized confusion matrix}
         \label{fig:row-confusion-matrix}
     \end{subfigure}
-    \caption{Confusion matrices of the three classifiers.}
+    \caption{Confusion matrices of the three classifiers}
     \label{fig:confusion-matrix}
  \end{figure}
  
-It is important to filter out the noise in order to get good news-relevant tweets. Due to the large amount of data, an overly conservative classifier is not necessarily a bad thing. Even though we might be missing a lot of relevant tweets, we are still getting a large amount of useful predictions.
+Due to the large amount of data, an overly conservative classifier is not necessarily a bad thing: even though we might be missing a lot of relevant tweets, we are still getting a large amount of useful predictions. 
 
 \bibliographystyle{plain}
 \bibliography{report.bib}
