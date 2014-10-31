@@ -11,7 +11,7 @@ def iterate_tweets(directory):
     :return: a tweet per iteration
     :rtype: dict
     """
-    for file in listdir(directory):
+    for file in sorted(listdir(directory)):
         if file.startswith("twitter-"):
             with open(path.join(directory, file)) as f:
                 for line in f:
