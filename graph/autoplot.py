@@ -3,22 +3,13 @@ import codecs
 import sys, ast
 import pdb
 
-
-from matplotlib.dates import YearLocator, MonthLocator, DateFormatter
-
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-
 import plotly.plotly as py
 from plotly.graph_objs import *
 
 py.sign_in("alialavia", "dlrlks5tzd")
 
-pd.options.display.mpl_style = 'default'
-
 DFMT = '%Y-%m-%d %H:%M:%S'
-MINOCCURANCE = 1
+MINOCCURANCE = 10
 
 #list of useless words!
 FILTEROUT = ['http']
