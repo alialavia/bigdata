@@ -69,9 +69,9 @@ A big picture of the system is depicted in Figure ~\ref{fig:A big picture of the
 
 
 \section{Data model}
-% todo
-...
+The twitter streaming API provides data in JSON format. It outputs a tweet as a JSON object on a single line. We naturally copied this data storage format to our permanent S3 storage. That is: we have a JSON object representing a tweet on each separate line in our data files.
 
+The Spark Map-Reduce framework naturally works with text data where each line represents a new element. By using functionality such as Spark's \texttt{textFile}, we can map each line of text to a specific function. Because each tweet resides on a different line of text, this means that we can map each individual tweet to a function. This makes using the data in a Map-Reduce context extremely easy.
 
 \section{Design of the system}
 System architecture is depicted in Figure ~\ref{fig:Architecture design of the system}. The data storage component is on Amazon S3, and the data process platfrom is on Apache Spark. 
