@@ -158,7 +158,7 @@ Selecting the sampling rate $R$ (as mentioned in section \ref{sec:postprocess}) 
 We were able to classify 600GB of tweets in roughly 10 hours using 20 Amazon EC2 m1.medium instances. The Spark Map-Reduce framework created 10,702 tasks. Each of these tasks independently computes the predictions on a part of the dataset and write the results to a file on S3. A single task takes on average $65.4 (\pm 20.6)$ seconds to complete. Since we were restricted to a maximum of 20 EC2 instances, this takes about 10 hours in total.
 
 \section{Conclusion}
-Our main goal in this part of the project was to scale up our prediction capability. We want to use our trained classifier to quickly classify all of the collected tweets. We have succeeded in doing so and the final performance of the system is satisfactory. Our Amazon account was limited to a maximum of 20 EC instances. Without this limitation and with a sufficient number of instances, the computations on our big data set could have finished in minutes rather than hours.
+Our main goal in this part of the project was to scale up our prediction capability. We want to use our trained classifier to quickly classify all of the collected tweets. We have succeeded in doing so and the final performance of the system is satisfactory. Our Amazon account was limited to a maximum of 20 EC2 instances. Without this limitation and with a sufficient number of instances, the computations on our big data set could have finished in minutes rather than hours.
 
 \bibliographystyle{plain}
 \bibliography{report.bib}
