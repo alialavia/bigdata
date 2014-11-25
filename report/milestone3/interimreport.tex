@@ -70,27 +70,27 @@ A big picture of the system is depicted in Figure \ref{fig:A big picture of the 
 
 
 \section{Data model}
-The twitter streaming API provides data in JSON format. It outputs a tweet as a JSON object on a single line. We naturally copied this data storage format to our permanent S3 storage. That is: we have a JSON object representing a tweet on each separate line in our data files.
+The twitter streaming API provides data in JSON format. It outputs a tweet as a JSON object on a single line. We copied this data storage format to our permanent S3 storage. That is: we have a JSON object representing a tweet on each separate line in our data files.
 
 The Spark Map-Reduce framework naturally works with text data where each line represents a new element. By using functionality such as Spark's \texttt{textFile}, we can map each line of text, which represents a tweet, to a specific function. This makes using the data in a Map-Reduce context extremely easy.
 
 \section{Design of the system}
-The system architecture is depicted in Figure \ref{fig:Architecture design of the system}. We are using Amazon S3 to store our data and we are using Apache Spark to process the data.
+The system architecture is depicted in Figure \ref{fig:architecture}. The main idea here is to train a classifier for several news topics using the news twitter accounts as training data. Then we use this classifier to predict the massive stream of public tweets into these news topics. Any tweets that are not classified as 'sports', 'politics' or 'technology' are discarded. This filters out most of the non-relevant tweets. Finally the predicted tweets are used to compute term frequencies over time and detect interesting news trends.
 
-\begin{figure}
+\begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\textwidth]{images/system_arch.png} 
-	\caption{Architecture design of the system}
-	\label{fig:Architecture design of the system}
+	\includegraphics[width=0.72\textwidth]{images/system_arch.png} 
+	\caption{The architecture of the system}
+	\label{fig:architecture}
 \end{figure}
 
 \subsection{Data storage}
 We stored around 600GB of the twitter stream data on Amazon S3. We used the s3cmd tool, which is a command line tool and client for uploading, retrieving and managing data in Amazon S3 \cite{s3cmd}. By integrating our data collection script with this tool, we can directly upload the twitter streaming data into the S3 bucket. This benefits the whole system because we can load the large data set using the S3 protocol into our Spark instances.
 
-\subsection{Data process platform}
-The data process platform we use is Apache Spark running on top of Amazon Elastic MapReduce (EMR). Initially we ran Spark on Amazon EC2 directly without using EMR. We used a custom Amazon Machine Image (AMI)\cite{amazonami}, which includes Python2.7, sklearn and NLTK preinstalled. It turned out that the default configuration did not work well, and the executed tasks had a failure rate of 25\% - 50\%. For this reason, we decided to try the Amazon Elastic MapReduce (EMR) platform. This platform has Spark pre-configured, which resulted in a 0\% failure rate for our tasks.
+\subsection{Data processing platform}
+The data processing platform we use is Apache Spark running on top of Amazon Elastic MapReduce (EMR). Initially we ran Spark on Amazon EC2 directly without using EMR. We used a custom Amazon Machine Image (AMI)\cite{amazonami}, which has Python2.7, Scikit-Learn \cite{scikit-learn} and NLTK \cite{nltk} preinstalled. It turned out that the default configuration did not work well, and the executed tasks had a failure rate of 25\% - 50\%. For this reason, we decided to try the Amazon Elastic MapReduce (EMR) platform. This platform has Spark pre-configured, which resulted in a 0\% failure rate for our tasks.
 
-The data preprocessing is done by NLTK\cite{nltk} and Scikit-Learn\cite{scikit-learn}. We use the default NLTK word tokenizer and stem each token using the Lancaster stemmer. Additionally we generate bi-grams and tri-grams of the text data. We use Scikit-Learn to generate sparse feature vectors by hashing each token to a feature. The final classification model is trained using Spark's MLLib library\cite{mllib}. The trained model is an SVM with $L_1$ regularization.
+The data preprocessing is done by NLTK and Scikit-Learn. We use the default NLTK word tokenizer and stem each token using the Lancaster stemmer. Additionally we generate bigrams and trigrams of the text data. We use Scikit-Learn to generate sparse feature vectors by hashing each token to a feature. The final classification model is an SVM with $L_1$ regularization, trained using Spark's MLLib library\cite{mllib}.
 
 \section{Results}
 
@@ -114,7 +114,7 @@ In our previous report, we measured our news classifier's performance by using p
 
 It was evident that the classifier was not performing optimally. The high precision measures were offset by the extremely low recall measures. This meant that the classifier was only predicting the relevant labels for a few tweets and discarding most of them. This was likely the result of training on an imbalanced data set.
 
-The new classifier was trained on roughly two to three times as much data. Additionally, we ensured that each classifier in the one-vs-all approach was trained on roughly equally many positive and negative datasamples. The scores for the classifier are shown in table \ref{tbl:newclassifier}
+The new classifier was trained on roughly two to three times as much data. Additionally, we ensured that each classifier in the one-vs-all approach was trained on roughly equally many positive and negative data samples. The scores for this new balanced classifier is shown in table \ref{tbl:newclassifier}
 
 \begin{table}
 	\begin{center}
@@ -130,7 +130,7 @@ The new classifier was trained on roughly two to three times as much data. Addit
 	\label{tbl:newclassifier}
 \end{table}
 
-Although the precision of the classifier has gone down, our recall has increased a lot. This means that, although some predictions are wrong, we have a lot more predictions to work with.
+Although the precision of the classifier has gone down, our recall has increased significantly. This means that, although some predictions are wrong, we have a lot more predictions to work with. This benefits the post-processing step where we use term frequencies over time to determine news trends.
 
 Despite scaling up the entire system, the amount of available training data did not increase significantly. The changes in performance are not due to an increase of data, but are more likely attributed to training on a more balanced data set.
 
@@ -140,7 +140,7 @@ Although the classifier manages to classify the tweets in the mentioned categori
 
 We perform analysis by sampling the tweets, with a rate of \textit{R}, then tokenizig the classified tweets and filtering out the less frequent nouns. In this way, we manage to filter out lots of noisy outputs of the classifier. Afterwards, we look into different slope of the time series, and identify top surging topics as news-worthy topics, which can be presented to the users.
 
-Selecting the sampling rate R is non-trivial, as it depends on the life time of each news, which varies based on the news topic, scale (global or regional), and so on. Despite that, we managed to see reasonable results with sampling frequencies of 1 hour. See Figure \ref{fig:Political news topic prediction using time series analysis, with a sampling frequency of 1 hour}.
+Selecting the sampling rate R is non-trivial, as it depends on the life time of each news item, which varies based on the news topic, scale (global or regional), and so on. Despite that, we managed to obtain reasonable results with sampling frequencies of 1 hour. See Figure \ref{fig:Political news topic prediction using time series analysis, with a sampling frequency of 1 hour}.
 
 
 
