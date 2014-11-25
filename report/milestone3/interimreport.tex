@@ -74,7 +74,7 @@ The twitter streaming API provides data in JSON format. It outputs a tweet as a 
 The Spark Map-Reduce framework naturally works with text data where each line represents a new element. By using functionality such as Spark's \texttt{textFile}, we can map each line of text, which represents a tweet, to a specific function. This makes using the data in a Map-Reduce context extremely easy.
 
 \section{Design of the system}
-System architecture is depicted in Figure \ref{fig:Architecture design of the system}. The data storage component is on Amazon S3, and the data process platfrom is on Apache Spark. 
+The system architecture is depicted in Figure \ref{fig:Architecture design of the system}. We are using Amazon S3 to store our data and we are using Apache Spark to process the data.
 
 \begin{figure}[H]
 	\centering
@@ -84,12 +84,12 @@ System architecture is depicted in Figure \ref{fig:Architecture design of the sy
 \end{figure}
 
 \subsection{Data storage}
-We stored around 600G of the twitter stream data on Amazon S3. Differ from previous work, we integrate the data collecting script with s3cmd tool, which is a command line tool and client for uploading, retrieving and managing data in Amazon S3\cite{s3cmd}, and direct uploaded the twitter streamming data into S3 bucket. This benefit the whole system cause we can load the large training and prediction dataset via using S3 protocol into our Spark instance. 
+We stored around 600GB of the twitter stream data on Amazon S3. We used the s3cmd tool, which is a command line tool and client for uploading, retrieving and managing data in Amazon S3 \cite{s3cmd}. By integrating our data collection script with this tool, we can directly upload the twitter streaming data into the S3 bucket. This benefits the whole system because we can load the large data set using the S3 protocol into our Spark instances.
 
 \subsection{Data process platform}
-Our data process platfrom is Spark on top of Amazon Elastic Mapreduce(EMR). In the begining we run Spark on Aamzon EC2. This was done by customizing our own Amazon Machine Image (AMI) include Python2.7 and NLTK library, and then created several spark instance on EC2 by this AMI. But after running the predition job on EC2, it shows that the failure rate on spark instance is too high(25\%-50\%). So we change the platform to Amazon EMR, which has some nice aspects such as dynamic MapReduce cluster sizing, ease of use for simple jobs via their proprietary web console, and great documentation. Though our accont has limitation of EMR that can only run 20 instacne at most. 
+The data process platform we use is Apache Spark running on top of Amazon Elastic MapReduce (EMR). Initially we ran Spark on Amazon EC2 directly without using EMR. We used a custom Amazon Machine Image (AMI), which includes Python2.7, sklearn and NLTK preinstalled. It turned out that the default configuration did not work well, and the executed tasks had a failure rate of 25\% - 50\%. For this reason, we decided to try the Amazon Elastic MapReduce (EMR) platform. This platform has Spark pre-configured, which resulted in a 0\% failure rate for our tasks.
 
-The data preprocessing is done by NLTK library, and classification model training was done by using SVM with L1 regularization in Spark MLlib. 
+The data preprocessing is done by NLTK library. We use the default NLTK word tokenizer and stem each token using the Lancaster stemmer. Additionally we generate bi-grams and tri-grams of the text data. We use Scikit-Learn to generate sparse feature vectors by hashing each token to a feature. The final classification model is trained using Spark's MLLib library. The trained model is an SVM with $L_1$ regularization.
 
 \section{Results}
 
