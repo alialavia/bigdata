@@ -57,7 +57,7 @@ We tackle this problem by taking the following steps:
 	\item \textit{Labeling the tweets: }Label each tweet using the classifier we previously trained
 \end{enumerate}
 
-A big picture of the system is depicted in Figure ~\ref{fig:A big picture of the system}. In the rest of this report we will elaborate how we implement the solution in a scalalaby way on Spark. 
+A big picture of the system is depicted in Figure \ref{fig:A big picture of the system}. In the rest of this report we will elaborate how we implement the solution in a scalalaby way on Spark. 
 
 \begin{figure}[H]
 	\centering
@@ -69,12 +69,12 @@ A big picture of the system is depicted in Figure ~\ref{fig:A big picture of the
 
 
 \section{Data model}
-% todo
-...
+The twitter streaming API provides data in JSON format. It outputs a tweet as a JSON object on a single line. We naturally copied this data storage format to our permanent S3 storage. That is: we have a JSON object representing a tweet on each separate line in our data files.
 
+The Spark Map-Reduce framework naturally works with text data where each line represents a new element. By using functionality such as Spark's \texttt{textFile}, we can map each line of text, which represents a tweet, to a specific function. This makes using the data in a Map-Reduce context extremely easy.
 
 \section{Design of the system}
-System architecture is depicted in Figure ~\ref{fig:Architecture design of the system}. The data storage component is on Amazon S3, and the data process platfrom is on Apache Spark. 
+System architecture is depicted in Figure \ref{fig:Architecture design of the system}. The data storage component is on Amazon S3, and the data process platfrom is on Apache Spark. 
 
 \begin{figure}[H]
 	\centering
@@ -84,12 +84,18 @@ System architecture is depicted in Figure ~\ref{fig:Architecture design of the s
 \end{figure}
 
 \subsection{Data storage}
-We stored around 600G of the twitter stream data on Amazon S3. Differ from previous work, we integrate the data collecting script with s3cmd tool, which is a command line tool and client for uploading, retrieving and managing data in Amazon S3~\cite{s3cmd}, and direct uploaded the twitter streamming data into S3 bucket. This benefit the whole system cause we can load the large training and prediction dataset via using S3 protocol into our Spark instance. 
+We stored around 600G of the twitter stream data on Amazon S3. Differ from previous work, we integrate the data collecting script with s3cmd tool, which is a command line tool and client for uploading, retrieving and managing data in Amazon S3\cite{s3cmd}, and direct uploaded the twitter streamming data into S3 bucket. This benefit the whole system cause we can load the large training and prediction dataset via using S3 protocol into our Spark instance. 
 
 \subsection{Data process platform}
+<<<<<<< HEAD
 Our data processing consists of two separate phases. At first, we classify the tweets by running it on Spark, on top of Amazon Elastic Mapreduce(EMR). In the begining we were running Spark on Aamzon EC2, we create ...
  
 \subsection{Platform}
+=======
+Our data process platfrom is Spark on top of Amazon Elastic Mapreduce(EMR). In the begining we run Spark on Aamzon EC2. This was done by customizing our own Amazon Machine Image (AMI) include Python2.7 and NLTK library, and then created several spark instance on EC2 by this AMI. But after running the predition job on EC2, it shows that the failure rate on spark instance is too high(25\%-50\%). So we change the platform to Amazon EMR, which has some nice aspects such as dynamic MapReduce cluster sizing, ease of use for simple jobs via their proprietary web console, and great documentation. Though our accont has limitation of EMR that can only run 20 instacne at most. 
+
+The data preprocessing is done by NLTK library, and classification model training was done by using SVM with L1 regularization in Spark MLlib. 
+>>>>>>> 6bb1162cd6e6a47a32061297f526d30293a09ef9
 
 \section{Results}
 
@@ -154,7 +160,7 @@ Selecting the sampling rate R is non-trivial, as it depends on the life time of 
 
 \subsection{Prediction scalability}
 
-Our main goal in this part of the project was to scale up our prediction capability. We want to use our trained classifier to quickly classify all of the collected tweets. We were able to classify 600GB of tweets in roughly 10 hours using 20 Amazon EC2 m1.medium instances. The Spark Map-Reduce framework created 10,702 tasks. Each of these tasks independently computes the predictions on a part of the dataset and write the results to a file on s3. A single task takes on average $65.4 (\pm 20.6)$ seconds to complete. Since we were restricted to 20 EC2 instances, this takes about 10 hours in total. With sufficiently available instances, this computation could have been done in minutes instead of hours.
+Our main goal in this part of the project was to scale up our prediction capability. We want to use our trained classifier to quickly classify all of the collected tweets. We were able to classify 600GB of tweets in roughly 10 hours using 20 Amazon EC2 m1.medium instances. The Spark Map-Reduce framework created 10,702 tasks. Each of these tasks independently computes the predictions on a part of the dataset and write the results to a file on S3. A single task takes on average $65.4 (\pm 20.6)$ seconds to complete. Since we were restricted to 20 EC2 instances, this takes about 10 hours in total. With sufficiently available instances, this computation could have been done in minutes instead of hours.
 
 \section{Future Work}
 
