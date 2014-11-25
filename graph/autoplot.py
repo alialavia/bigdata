@@ -6,20 +6,24 @@ import pdb
 import plotly.plotly as py
 from plotly.graph_objs import *
 
+def selecttop(d, top):
+    sizes = {k : (sum(d[k]) / len(d[k])) for k in d}
+    sorted(sizes, key=sizes.get)
+
 py.sign_in("alialavia", "dlrlks5tzd")
 
 DFMT = '%Y-%m-%d %H:%M:%S'
-MINOCCURANCE = 10
+MINOCCURANCE = 100
 
 #list of useless words!
-FILTEROUT = ['http']
+FILTEROUT = ['http', 'rt', '@', 'https']
 #pdb.set_trace() #BREAKPOINT
 
 # Read parameters from command line
 fname = sys.argv[1]
 startdate = datetime.datetime.strptime(sys.argv[2], DFMT)
 samplingfreq = int(sys.argv[3])
-
+plotname = sys.argv[4]
 # Open and load the fiel into a list
 twfile = codecs.open(fname, encoding='utf-8')
 timeseries = ast.literal_eval(twfile.read())
@@ -69,7 +73,7 @@ print "Plotting..."
 # print len(times), len(timeseries['obama'])
 data = Data([Scatter(x=times, y=filtered_data[topic],name = topic) for topic in filtered_data])
 
-plot_url = py.plot(data, filename='python-datetime')
+plot_url = py.plot(data, filename=plotname)
 
 """
 ax.plot_date(times, timeseries['obama'],'-')

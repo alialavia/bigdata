@@ -7,15 +7,11 @@ import datetime, math
 from datetime import datetime
 from nltk import pos_tag
 from nltk import word_tokenize
-
-import matplotlib.pyplot as plt
-from matplotlib.dates import YearLocator, MonthLocator, DateFormatter
-
 # Constants
 
 YEAR = 2014
 DFMT = '%Y-%m-%d %H:%M:%S'
-CAT = 'politics'
+
 def datetoindex(startdate, currentdate, samplingfreq):
     """ Convert a date to an index based on the frequency """
     return int(math.ceil((currentdate - startdate).total_seconds() / samplingfreq))
@@ -37,7 +33,7 @@ def linetodata(line):
 fname = sys.argv[1]
 startdate = datetime.strptime(sys.argv[2], DFMT)
 samplingfreq = int(sys.argv[3])
-
+CAT = sys.argv[4]
 
 #lines = [line for line in open(fname)]
 twfile = codecs.open(fname, encoding='utf-8')
@@ -47,7 +43,6 @@ twfile = codecs.open(fname, encoding='utf-8')
 #print "File opened successfully"
 
 timeseries = list()
-startdate = datetime.strptime('2014-10-09 13:00:00',DFMT)
 l=0
 for line in twfile:
     stderr.write("\033[2K\r")
