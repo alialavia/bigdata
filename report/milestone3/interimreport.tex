@@ -87,9 +87,8 @@ System architecture is depicted in Figure ~\ref{fig:Architecture design of the s
 We stored around 600G of the twitter stream data on Amazon S3. Differ from previous work, we integrate the data collecting script with s3cmd tool, which is a command line tool and client for uploading, retrieving and managing data in Amazon S3~\cite{s3cmd}, and direct uploaded the twitter streamming data into S3 bucket. This benefit the whole system cause we can load the large training and prediction dataset via using S3 protocol into our Spark instance. 
 
 \subsection{Data process platform}
-We run Spark on top of Amazon Elastic Mapreduce(EMR). In the begining we were running Spark on Aamzon EC2, we create 
-
-
+Our data processing consists of two separate phases. At first, we classify the tweets by running it on Spark, on top of Amazon Elastic Mapreduce(EMR). In the begining we were running Spark on Aamzon EC2, we create ...
+ 
 \subsection{Platform}
 
 \section{Results}
@@ -134,15 +133,30 @@ Although the precision of the classifier has gone down, our recall has increased
 
 Despite scaling up the entire system, the amount of available training data did not increase significantly. The changes in performance are not due to an increase of data, but are more likely attributed to training on a more balanced data set.
 
+\subsection {Post-processing the classified results}
+% time series
+Although the classifier manages to classify the tweets in the mentioned categories, these classified outputs are not essentially news headlines. This is due to the fact that the classifier classifies the tweets individually, while an important property of news-related tweets is their frequency of appearance in a given timeframe. Hence, we need to perform some temporal analysis of the classified tweets.
+
+We perform analysis by sampling the tweets, with a rate of \textit{R}, then tokenizig the classified tweets and filtering out the less frequent nouns. In this way, we manage to filter out lots of noisy outputs of the classifier. Afterwards, we look into different slope of the time series, and identify top surging topics as news-worthy topics, which can be presented to the users.
+
+Selecting the sampling rate R is non-trivial, as it depends on the life time of each news, which varies based on the news topic, scale (global or regional), and so on. Despite that, we managed to see reasonable results with sampling frequencies of 1 hour. See Figure \ref{fig:Political news topic prediction using time series analysis, with a sampling frequency of 1 hour}.
+
+
+
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{images/political_news_topics_extracted_from_twitter.png} 
+	\caption{Political news topic prediction using time series analysis, with a sampling frequency of 1 hour}
+	\label{fig:Political news topic prediction using time series analysis, with a sampling frequency of 1 hour}
+\end{figure}
+
 \subsection{Prediction scalability}
 
 Our main goal in this part of the project was to scale up our prediction capability. We want to use our trained classifier to quickly classify all of the collected tweets. We were able to classify 600GB of tweets in roughly 10 hours using 20 Amazon EC2 m1.medium instances. The Spark Map-Reduce framework created 10,702 tasks. Each of these tasks independently computes the predictions on a part of the dataset and write the results to a file on s3. A single task takes on average $65.4 (\pm 20.6)$ seconds to complete. Since we were restricted to 20 EC2 instances, this takes about 10 hours in total. With sufficiently available instances, this computation could have been done in minutes instead of hours.
 
 \section{Future Work}
-% todo
-...
-
-
 
 
 \bibliographystyle{plain}
