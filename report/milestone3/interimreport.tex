@@ -47,7 +47,7 @@ Tsay Kai-En\inst{1}}
 
 \section{Introduction}
 % todo
-This report presents the current status of the project \textbf{Automatic News Generation Based on Twitter}, for \textbf{Big Data} course (code \textit{263-3010-00L}). This project tries to answer the following questions: 
+This report presents the current status of the project \textbf{Automatic News Generation Based on Twitter}, for the \textbf{Big Data} course (code \textit{263-3010-00L}). This project tries to answer the following questions: 
 \textit{Can we automatically generate news headlines based on public twitter posts? Can this method of news generation perform better than the available news agencies, in terms of speed, reliability and so on?}
 
 We tackle this problem by taking the following steps:
@@ -55,10 +55,11 @@ We tackle this problem by taking the following steps:
 \begin{enumerate}
 	\item \textit{Data collection: }Gathering a large set of twitter posts and news headlines 
 	\item \textit{Building a classifier: }Use the news headlines to train a classifier
-	\item \textit{Labeling the tweets: }Label each tweet using the classifier we previously trained
+	\item \textit{Labeling the tweets: }Label each tweet using the classifier
+	\item \textit{Post-processing tweets: }Find term-frequencies over time to detect news trends
 \end{enumerate}
 
-A big picture of the system is depicted in Figure \ref{fig:A big picture of the system}. In the rest of this report we will elaborate how we implement the solution in a scalalaby way on Spark. 
+A big picture of the system is depicted in Figure \ref{fig:A big picture of the system}. In the rest of this report we will elaborate on how we implemented the solution in a scalable way using Apache Spark.
 
 \begin{figure}[H]
 	\centering
@@ -70,7 +71,7 @@ A big picture of the system is depicted in Figure \ref{fig:A big picture of the 
 
 
 \section{Data model}
-The twitter streaming API provides data in JSON format. It outputs a tweet as a JSON object on a single line. We copied this data storage format to our permanent S3 storage. That is: we have a JSON object representing a tweet on each separate line in our data files.
+The twitter streaming API provides data in JSON format. It outputs a tweet as a JSON object on a single line. We copied this data storage format to our permanent data storage. That is: we have a JSON object representing a tweet on each separate line in our data files.
 
 The Spark Map-Reduce framework naturally works with text data where each line represents a new element. By using functionality such as Spark's \texttt{textFile}, we can map each line of text, which represents a tweet, to a specific function. This makes using the data in a Map-Reduce context extremely easy.
 
@@ -88,9 +89,17 @@ The system architecture is depicted in Figure \ref{fig:architecture}. The main i
 We stored around 600GB of the twitter stream data on Amazon S3. We used the s3cmd tool, which is a command line tool and client for uploading, retrieving and managing data in Amazon S3 \cite{s3cmd}. By integrating our data collection script with this tool, we can directly upload the twitter streaming data into the S3 bucket. This benefits the whole system because we can load the large data set using the S3 protocol into our Spark instances.
 
 \subsection{Data processing platform}
-The data processing platform we use is Apache Spark running on top of Amazon Elastic MapReduce (EMR). Initially we ran Spark on Amazon EC2 directly without using EMR. We used a custom Amazon Machine Image (AMI)\cite{amazonami}, which has Python2.7, Scikit-Learn \cite{scikit-learn} and NLTK \cite{nltk} preinstalled. It turned out that the default configuration did not work well, and the executed tasks had a failure rate of 25\% - 50\%. For this reason, we decided to try the Amazon Elastic MapReduce (EMR) platform. This platform has Spark pre-configured, which resulted in a 0\% failure rate for our tasks.
+The data processing platform we use is Apache Spark running on top of Amazon Elastic MapReduce (EMR). Initially we ran Spark on Amazon EC2 directly without using EMR. It turned out that the default configuration did not work well, and the executed tasks had a failure rate of 25\% - 50\%. For this reason, we decided to try the EMR platform. This platform has Spark pre-configured, which resulted in a 0\% failure rate for our tasks.
 
-The data preprocessing is done by NLTK and Scikit-Learn. We use the default NLTK word tokenizer and stem each token using the Lancaster stemmer. Additionally we generate bigrams and trigrams of the text data. We use Scikit-Learn to generate sparse feature vectors by hashing each token to a feature. The final classification model is an SVM with $L_1$ regularization, trained using Spark's MLLib library\cite{mllib}.
+\subsection{Classification}
+We want to classify the tweets into the three possible news-topics 'sports', 'technology' and 'politics'. The data preprocessing is done using NLTK \cite{nltk} and Scikit-Learn \cite{scikit-learn}. We use the default NLTK word tokenizer and stem each token using the Lancaster stemmer. Additionally we generate bigrams and trigrams of the text data. We use Scikit-Learn to generate sparse feature vectors by hashing each token to a feature. The final classification model is an SVM with $L_1$ regularization, trained using Spark's MLLib library\cite{mllib}.
+
+\subsection{Post-processing predicted tweets}
+\label{sec:postprocess}
+Although the classifier manages to classify the tweets in the mentioned categories, these classified outputs are not essentially news headlines. This is due to the fact that the classifier classifies the tweets individually, while an important property of news-related tweets is their frequency of appearance in a given timeframe. Hence, we need to perform some temporal analysis of the classified tweets.
+
+We perform analysis by sampling the predicted tweets, with a rate of \textit{R}, then tokenizing the classified tweets and filtering out the less frequent nouns. In this way, we manage to filter out lots of noisy outputs of the classifier. Afterwards, we look into different slope of the time series, and identify top surging topics as news-worthy topics, which can be presented to the users.
+
 
 \section{Results}
 
@@ -135,16 +144,7 @@ Although the precision of the classifier has gone down, our recall has increased
 Despite scaling up the entire system, the amount of available training data did not increase significantly. The changes in performance are not due to an increase of data, but are more likely attributed to training on a more balanced data set.
 
 \subsection {Post-processing the classified results}
-% time series
-Although the classifier manages to classify the tweets in the mentioned categories, these classified outputs are not essentially news headlines. This is due to the fact that the classifier classifies the tweets individually, while an important property of news-related tweets is their frequency of appearance in a given timeframe. Hence, we need to perform some temporal analysis of the classified tweets.
-
-We perform analysis by sampling the tweets, with a rate of \textit{R}, then tokenizig the classified tweets and filtering out the less frequent nouns. In this way, we manage to filter out lots of noisy outputs of the classifier. Afterwards, we look into different slope of the time series, and identify top surging topics as news-worthy topics, which can be presented to the users.
-
-Selecting the sampling rate R is non-trivial, as it depends on the life time of each news item, which varies based on the news topic, scale (global or regional), and so on. Despite that, we managed to obtain reasonable results with sampling frequencies of 1 hour. See Figure \ref{fig:Political news topic prediction using time series analysis, with a sampling frequency of 1 hour}.
-
-
-
-
+Selecting the sampling rate $R$ (as mentioned in section \ref{sec:postprocess}) is non-trivial, as it depends on the life time of each news item, which varies based on the news topic, scale (global or regional), and so on. Despite that, we managed to obtain reasonable results with sampling frequencies of 1 hour. For example, in Figure \ref{fig:Political news topic prediction using time series analysis, with a sampling frequency of 1 hour} we see that the two most common topics are Obama and immigration. This corresponds to the recent announcement by Obama on the change of immigration laws.
 
 \begin{figure}
 	\centering
