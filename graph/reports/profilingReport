@@ -1,0 +1,30 @@
+Input: testtweet
+
+with nltk.tag.HunposTagger, output in test3.ts:
+
+ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.002    0.002    3.221    3.221 sample.py:2(<module>)
+        1    0.001    0.001    2.613    2.613 sample.py:6(main)
+        1    0.034    0.034    2.603    2.603 helper.py:74(totimeseries)
+     3100    0.033    0.000    2.239    0.001 helper.py:65(findnouns)
+     3100    0.010    0.000    1.118    0.000 /usr/local/lib/python2.7/dist-packages/nltk-3.0.0-py2.7.egg/nltk/tokenize/__init__.py:86(word_tokenize)
+     3100    0.122    0.000    1.076    0.000 /usr/local/lib/python2.7/dist-packages/nltk-3.0.0-py2.7.egg/nltk/tag/hunpos.py:101(tag)
+    37393    0.838    0.000    0.838    0.000 {method 'readline' of 'file' objects}
+     3659    0.049    0.000    0.758    0.000 /usr/local/lib/python2.7/dist-packages/nltk-3.0.0-py2.7.egg/nltk/tokenize/treebank.py:59(tokenize)
+        1    0.000    0.000    0.606    0.606 helper.py:1(<module>)
+    97198    0.455    0.000    0.604    0.000 {method 'sub' of '_sre.SRE_Pattern' objects}
+
+with pos_tag, output in test4.ts:
+ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.002    0.002   31.234   31.234 sample.py:2(<module>)
+        1    0.001    0.001   30.619   30.619 sample.py:6(main)
+        1    0.025    0.025   30.603   30.603 helper.py:74(totimeseries)
+     3100    0.023    0.000   30.299    0.010 helper.py:65(findnouns)
+     3100    0.005    0.000   29.476    0.010 /usr/local/lib/python2.7/dist-packages/nltk-3.0.0-py2.7.egg/nltk/tag/__init__.py:83(pos_tag)
+     3100    0.036    0.000   29.105    0.009 /usr/local/lib/python2.7/dist-packages/nltk-3.0.0-py2.7.egg/nltk/tag/sequential.py:57(tag)
+    34292    0.043    0.000   29.056    0.001 /usr/local/lib/python2.7/dist-packages/nltk-3.0.0-py2.7.egg/nltk/tag/sequential.py:64(tag_one)
+    34292    0.041    0.000   29.013    0.001 /usr/local/lib/python2.7/dist-packages/nltk-3.0.0-py2.7.egg/nltk/tag/sequential.py:632(choose_tag)
+    34292    0.158    0.000   28.420    0.001 /usr/local/lib/python2.7/dist-packages/nltk-3.0.0-py2.7.egg/nltk/classify/maxent.py:143(classify)
+    34292    9.230    0.000   27.657    0.001 /usr/local/lib/python2.7/dist-packages/nltk-3.0.0-py2.7.egg/nltk/classify/maxent.py:146(prob_classify)
+
+

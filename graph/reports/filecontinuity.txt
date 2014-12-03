@@ -1,0 +1,18 @@
+Found a jump in:  data/part-00135 0:25:33
+Found a jump in:  data/part-00204 0:24:38
+Found a jump in:  data/part-00559 0:25:33
+Found a jump in:  data/part-00584 0:26:32
+Found a jump in:  data/part-01239 0:43:42
+Found a jump in:  data/part-01244 0:20:36
+Found a jump in:  data/part-01249 0:20:05
+Found a jump in:  data/part-01474 0:23:51
+Found a jump in:  data/part-01674 0:27:52
+Found a jump in:  data/part-01694 0:22:04
+Found a jump in:  data/part-01879 0:24:45
+Found a jump in:  data/part-01909 0:25:22
+Found a jump in:  data/part-01914 0:25:05
+Found a jump in:  data/part-02039 0:24:19
+Found a jump in:  data/part-02044 0:28:02
+Found a jump in:  data/part-02074 0:20:52
+Found a jump in:  data/part-02139 19 days, 17:47:41
+Found a jump in:  data/part-02141 0:28:00
