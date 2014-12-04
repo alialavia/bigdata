@@ -3,33 +3,43 @@
 
 <head>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="d3-cloud/lib/d3/d3.js"></script>
-<script src="d3-cloud/d3.layout.cloud.js"></script>
+<script src="../../../d3-cloud/lib/d3/d3.js"></script>
+<script src="../../../d3-cloud/d3.layout.cloud.js"></script>
 </head> 
 <body>
 <div id="cloud1" border='5'></div>
 <div id="cloud2" border='5'></div>
 <script>
+words = []
 $.getJSON("../results/topsalltime.json", function( data ) {
 
   var items = [];
-  $.each( data, function( key, val ) {
-    items.push( "<li id='" + key + "'>" + val + "</li>" );
-    console.log(val)
-  });
-  $( "<ul/>", {
+  
+/*$.each( data, function( key, val ) {
+
+  });*/
+  var index;
+  mydict = data["politics"][0];
+  var a = Array();
+  var i = 0;
+  for (word in mydict)
+  {
+    a[i++] =  { text: word, size: mydict[word] };
+
+  }
+  words = a;
+  console.log (words);
+  //for (index = 0;index < data["politics"].length; index++)
+  {
+   // console.log(data["politics"][index])
+  }
+  /*$( "<ul/>", {
     "class": "my-new-list",
     html: items.join( "" )
-  }).appendTo( "body" );
-});
-
+  }).appendTo( "body" );*/
 var fill = d3.scale.category20();
 d3.layout.cloud().size([300, 300])
-    .words([
-      "Hello", "world", "normally", "you", "want", "more", "words",
-      "than", "this"].map(function(d) {
-      return {text: d, size: 20 + Math.random() * 30};
-    }))
+    .words(words)
     .padding(5)
     .rotate(function() { return ~~(Math.random() * 10) * 10 ; })
     .font("Impact")
@@ -55,5 +65,8 @@ function draw(words) {
       })
       .text(function(d) {  console.log(d.text) ; return d.text;});
 }
+});
+
+
 </script>
 </body>
