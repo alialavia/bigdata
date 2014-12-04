@@ -1,0 +1,13 @@
+<html>
+ <head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>    
+
+<script type="text/javascript">
+    $(document).ready(function(e) {
+        console.log("Test")
+    $.getJSON( "https://github.com/alialavia/bigdata/blob/master/graph/results/topsalltime.json" , function( result ){
+        alert(result);
+    });
+});
+</script></head>
+</html>
