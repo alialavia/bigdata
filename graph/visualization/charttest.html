@@ -1,0 +1,106 @@
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://d3js.org/d3.v3.js"></script>
+
+<style>
+
+body {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+</style>
+<script type="text/javascript">
+function drawChart(data, selection)
+{
+
+  var HEIGHT = $(selection).height();
+  var WIDTH = $(selection).width();
+
+var margin = {top: 20, right: 20, bottom: 30, left: 50},
+ height = HEIGHT - margin.top - margin.bottom, width = WIDTH - margin.left - margin.right;
+
+var x = d3.time.scale()
+    .range([0, width]);
+
+var y = d3.scale.linear()
+    .range([height, 0]);
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left");
+
+var line = d3.svg.line()
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d.freq); });
+
+var svg = d3.select(selection).append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    
+
+
+  x.domain(d3.extent(data, function(d) { return d.date; }));
+  y.domain(d3.extent(data, function(d) { return d.freq; }));
+
+  svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis);
+
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+    .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("Term frequency");
+
+  svg.append("path")
+      .datum(data)
+      .attr("class", "line")
+      .attr("d", line);
+}
+</script>
+</head>
+<body>
+  <div id="mydiv" style="width:50%;height:300px"></div>
+<script>
+
+
+$(function() {
+  
+    data = [ {date: new Date('2014-10-10T12:00:00Z'), freq: 10}, 
+    {date: new Date('2014-10-10T12:10:00Z'), freq: 30}
+    , {date: new Date('2014-10-10T12:13:00Z'), freq: 5}  ]
+  drawChart(data, "#mydiv")
+});
+
+</script>
+</body>
+</html>
