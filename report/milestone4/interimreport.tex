@@ -10,6 +10,7 @@
 \usepackage{graphicx} % for importing images
 \usepackage{caption}
 \usepackage{subcaption} % for subfigures
+\usepackage{amsmath}
 \captionsetup{compatibility=false} % to make subfigures compatible with template
 
 \usepackage{url} % for URL references
@@ -60,8 +61,43 @@ Current approaches to classify messages on Twitter mostly focusing on personal d
 
 
 \section{Performance Measurements and Results}
+The system is capable of classifying tweets and performing time-series analysis on them. In the first stage, the system classifies tweets as belonging to one of three possible categories: "sports", "politics" and "technology". These categories were chosen because they often contain news relevant information and have very little overlap in terms of terminology. It is important that this is scalable and highly performant because we are classifying our entire twitter data set (about $600\text{GB}$). In the second stage, a time-series analysis is performed on the resulting classified tweets. At this point, the total amount of data has been reduced significantly because most of the non-relevant tweets have been removed. The time-series analysis therefor runs on a single computer and takes less than one hour to complete.
+
+\subsection{Execution time}
+The Spark MapReduce platform reduces our tweet classification task into 10,702 smaller tasks. Each tasks gets approximately $\frac{600\text{GB}}{10702} = 57.4\text{MB}$ worth of data. Such a task takes on average $65.4$ ($\pm 20.6$) seconds to complete, which means a single machine can process about $0.87\text{MB}$ of data per second. This includes parsing twitter JSON, removing stop words and URLs, stemming text, feature hashing and classification. On 20 machines it is possible to compute $17.54\text{MB}$ per second. In total this adds up to an execution time of 10 hours on the entire data set. Adding more machines would further decrease this.
+
+\subsection{Memory consumption}
+Our classifier uses feature hashing and stochastic gradient descent. Feature hashing ensures that each tweet gets hashed into approximately 1 million features. Because every tweet is processed individually by the stochastic gradient descent algorithm and our feature space is of a fixed size we achieve a space complexity of $O(1)$.
+
+\subsection{Solution quality}
+To measure the quality of our news classifier we do not train on a part of our dataset, and instead only test on that part. Furthermore we randomly select tweets from the public twitter stream which we assume are not news-worthy or relevant. These tweets should not be classified in any of the categories. We are interested in optimizing the precision, recall and $F_1$-score. When the classifier scores high on these measures, we are confident in its ability to categorize new tweets.
+
+\begin{table}[H]
+	\begin{center}
+		\begin{tabular}{|r|r|r|r|r|} \hline
+			class  & precision   & recall & f1-score  & support \\ \hline
+			technology    &   0.78 &     0.92  &    0.84   &  25343 \\
+			sports   &    0.75   &   0.73   &   0.74   &   25343 \\
+			politics   &    0.83  &    0.75   &   0.79   &   25343 \\
+			avg / total  &     0.79   &   0.80  &    0.79   &  76029 \\ \hline
+		\end{tabular}
+	\end{center}
+	\caption{Tweet classification performance over the three trained categories}
+	\label{tbl:newclassifier}
+\end{table}
+
+The achieved $F_1$ score is on average 0.79. This is sufficient for the purpose of removing non relevant tweets. The time-series analysis performed on the resulting tweets is capable of handling a small amount of noise, such as non-relevant tweets.
 
 \section{Conclusion}
+The original research question of this project was whether or not it is possible to predict the news using public tweets. In particular we are interested in the quality of the predicted news as it relates to existing news sources.
+
+The solution has provided us with several interesting insights. Political news gave us some of the best results. Obama's announcement about the new immigration law for example was very clearly reflected in the results. On the other hand, we also encountered news that was not relevant to politics, despite the fact that it involved voting. Sports news seems particularly tailored to predicting when a match is ongoing and its score. News in the technology category gave the worst results, as it is very difficult to predict whether a tweet containing the word "iPhone" is actually relevant (such as the release of the new iPhone) or not interesting at all (people complaining about their iPhones). Overall we think more training data would have improved the solution quality. It was however difficult to obtain more training data as we exhausted all of the known large news agencies.
+
+During the construction of the system we encountered several difficulties. After installing spark on amazon EC2, we noticed that when running a large data set about 50\% of all tasks were failing and had to be restarted. As we were unsure what the cause of this problem was, we decided to do a clean install of EC2 using Amazon's EMR. Because this EC2 installation was specifically tailored for EMR, it worked much better and we had a 0\% failure rate on the tasks. Another difficulty was collecting enough training data. Getting twitter data is easy, but getting news-relevant twitter data is rather difficult. We settled for using the news agencies' twitter accounts as a source of training data. Additional training data would have definitely improved the solution quality.
+
+In retrospect we should have tried separating news-relevant tweets from non-news relevant tweets instead of doing this per category. In particular, the technology category made it very difficult to find any news-worthy subjects.
+
+Given more time it would be interesting to try additional features, such as the geolocation of tweets, the number of retweets, followers or other interesting measures. Also, the collection of more training data from sources other than twitter could have improved the solution quality and is a worthwhile pursuit.
 
 \bibliographystyle{plain}
 \bibliography{report.bib}
