@@ -73,6 +73,10 @@ The system architecture is depicted in Figure \ref{fig:architecture}. The main i
 	\label{fig:architecture}
 \end{figure}
 
+The system is entirely build using python and we use the NLTK and Scikit-Learn libraries to do the preprocessing. For each tweet we extract the text, tokenize it, stem it and turn it into a sparse feature vector by using the hashing trick. The classifier is trained using Spark's MLLib. Although we do not have sufficient training data to necessitate the use of MLLib's distributed learning, we use it to compute the predictions on our large twitter data set, which requires scalability.
+
+After classifying the tweets and discarding most of the non-relevant ones we are left with a smaller data set. A single computer is sufficiently capable of performing the time-series analysis on this data set in less than an hour. The final results of this analysis are then used by a simple web interface to display the twitter generated news to the end user.
+
 \section{Performance Measurements and Results}
 The system is capable of classifying tweets and performing time-series analysis on them. In the first stage, the system classifies tweets as belonging to one of three possible categories: "sports", "politics" and "technology". These categories were chosen because they often contain news relevant information and have very little overlap in terms of terminology. It is important that this is scalable and highly performant because we are classifying our entire twitter data set (about $600\text{GB}$). In the second stage, a time-series analysis is performed on the resulting classified tweets. At this point, the total amount of data has been reduced significantly because most of the non-relevant tweets have been removed. The time-series analysis therefor runs on a single computer and takes less than one hour to complete.
 
