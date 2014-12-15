@@ -89,7 +89,7 @@ The system is entirely build using python and we use the NLTK \cite{nltk} and Sc
 After classifying the tweets and discarding most of the non-relevant ones we are left with a smaller data set. A single computer is sufficiently capable of performing the time-series analysis on this data set in less than an hour. The final results of this analysis are then used by a simple web interface to display the twitter generated news to the end user.
 
 \section{Performance Measurements and Results}
-The system is capable of classifying tweets and performing time-series analysis on them. In the first stage, the system classifies tweets as belonging to one of three possible categories: "sports", "politics" and "technology". These categories were chosen because they often contain news relevant information and have very little overlap in terms of terminology. It is important that this is scalable and highly performant because we are classifying our entire twitter data set (about $600\text{GB}$). In the second stage, a time-series analysis is performed on the resulting classified tweets. At this point, the total amount of data has been reduced significantly because most of the non-relevant tweets have been removed. The time-series analysis therefor runs on a single computer and takes less than one hour to complete.
+It is important that predicting tweets into one of three news categories "sports", "politics" and "technology" happens in a scalable and highly performant manner since we are classifying our entire data set (about $600\text{GB}$). This classification stage discards most of the non-relevant tweets and the resulting data set is much smaller. A single computer is sufficient to run the time-series analysis on this smaller data set within an hour.
 
 \subsection{Execution time}
 The Spark MapReduce platform reduces our tweet classification task into 10,702 smaller tasks. Each tasks gets approximately $\frac{600\text{GB}}{10702} = 57.4\text{MB}$ worth of data. Such a task takes on average $65.4$ ($\pm 20.6$) seconds to complete, which means a single machine can process about $0.87\text{MB}$ of data per second. This includes parsing twitter JSON, removing stop words and URLs, stemming text, feature hashing and classification. On 20 machines it is possible to compute $17.54\text{MB}$ per second. In total this adds up to an execution time of 10 hours on the entire data set. Adding more machines would further decrease this.
@@ -100,7 +100,7 @@ Our classifier uses feature hashing and stochastic gradient descent. Feature has
 \subsection{Solution quality}
 To measure the quality of our news classifier we do not train on a part of our dataset, and instead only test on that part. Furthermore we randomly select tweets from the public twitter stream which we assume are not news-worthy or relevant. These tweets should not be classified in any of the categories. We are interested in optimizing the precision, recall and $F_1$-score. When the classifier scores high on these measures, we are confident in its ability to categorize new tweets.
 
-\begin{table}[H]
+\begin{table}
 	\begin{center}
 		\begin{tabular}{|r|r|r|r|r|} \hline
 			class  & precision   & recall & f1-score  & support \\ \hline
