@@ -1,7 +1,9 @@
 Automatic News Generation Based on Twitter
 =======
 
-The authors were motivated by a simple question: can we generate more accurate and less biased news using twitter data in comparison to traditional news agencies? Would such a system have a potential of becoming an alternative to mainstream news sources? If so, such a system could be a more reliable source of unbiased news, which in turn will have immense effect on public awareness, knowledge and discourse.
+The system is to train a classifier for several news topics using the news twitter accounts as training data. Then we use this classifier to predict the massive stream of public tweets into these news topics. Any tweets that are not classified as 'sports', 'politics' or 'technology' are discarded. This filters out most of the non-relevant tweets. Finally the predicted tweets are used to compute term frequencies over time and detect interesting news trends.
+
+The system is entirely build using python and we use the NLTK and Scikit-Learn libraries to do the preprocessing. For each tweet we extract the text, tokenize it, stem it and turn it into a sparse feature vector by using the hashing trick. The classifier is trained using Spark's MLLib.
 
 Three components are included in this system:
 * Data collector
