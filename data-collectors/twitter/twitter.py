@@ -5,10 +5,10 @@ import logging
 
 TIMEOUT = 60
 MAX_TWEETS_IN_FILE = 100000
-APP_KEY = "Cr0DUzVu5vCL1Ocv0J9TzgXS8"
-APP_SECRET = "HyS4V5QiWCsrzXHGuYQao4Vi7NUwLGeID9RzV2i4sf6YmPQdXd"
-OAUTH_TOKEN = "2826918072-iRPfA5QUzGWBSvAxXz77V2J8vbrFQMp5FdPENoF"
-OAUTH_TOKEN_SECRET = "TY5q5wBkRO4x7j9Bwnm4mUt1WliAwwSzgp8AsPwfXLAZ2"
+APP_KEY = "your-twitter-app-key"
+APP_SECRET = "your-twitter-app-secret"
+OAUTH_TOKEN = "your-twitter-oauth-token"
+OAUTH_TOKEN_SECRET = "your-twitter-oauth-secret"
 
 
 class TwitterStream(object):
