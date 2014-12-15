@@ -9,7 +9,7 @@ Three components are included in this system:
 * Visualization of news key-terms over time
 
 ### Data Collector
-In order to run the `data-collectors` to collect twitter data from [Twitter Streams](https://dev.twitter.com/streaming/public), you should register your own twitter app key first.
+In order to run the `data-collectors` scritp to collect twitter data from [Twitter Streams](https://dev.twitter.com/streaming/public), you should register your own twitter app key first.
 
 All of your twitter news agent can be set under `data-collectors/news/twitter/twitternews.config`. 
 
