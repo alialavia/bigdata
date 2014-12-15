@@ -120,7 +120,14 @@ The achieved $F_1$ score is on average 0.79. This is sufficient for the purpose 
 \section{Conclusion}
 The research question of this project is whether or not it is possible to predict the news using public tweets. In particular we are interested in the quality of the predicted news as it relates to existing news sources. We simplify this problem by focusing on three specific topics of news: "politics", "sports" and "technology".
 
-The system we have constructed has provided us with several interesting insights. Political news gave us some of the best results. Obama's announcement about the new immigration law for example was very clearly reflected in the results. Sports news seems particularly tailored to predicting when a match is ongoing and its score. News in the technology category gave the worst results, as it is for example very difficult to predict whether a tweet containing the word "iPhone" is actually relevant (such as the release of the new iPhone) or not interesting at all (people complaining about their iPhones).
+The system we have constructed has provided us with several interesting insights. Political news gave us some of the best results. Obama's announcement about the new immigration law for example was very clearly reflected in the results (see Figure \ref{fig:results}). Sports news seems particularly tailored to predicting when a match is ongoing and its score. News in the technology category gave the worst results, as it is for example very difficult to predict whether a tweet containing the word "iPhone" is actually relevant (such as the release of the new iPhone) or not interesting at all (people complaining about their iPhones).
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.95\textwidth]{images/results.png} 
+	\caption{Results on the categories politics and sports at two different times.}
+	\label{fig:results}
+\end{figure}
 
 During the construction of the system we encountered several difficulties. After installing spark on amazon EC2, we noticed that when running a simple map-reduce word count program on a large data set about 50\% of all tasks were failing and had to be restarted. As we were unsure what the cause of this problem was, we decided to do a clean install of Spark using Amazon's EMR. Because this Spark installation was specifically tailored for EMR, it worked much better and we had a 0\% failure rate on the tasks. Another difficulty was collecting enough training data. Getting twitter data is easy, but getting news-relevant twitter data is rather difficult. We settled for using the news agencies' twitter accounts as a source of training data. Overall we think more training data would have improved the solution quality. It was however difficult to obtain more training data as we exhausted all of the known large news agencies.
 
