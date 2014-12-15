@@ -63,6 +63,17 @@ There is not much traditional techniques that can be used for realizing such sys
 \section{Contribution}
 Current approaches to generate news based on Twitter focus on personal data for the most part. A system called "the tweeted times" is the closest thing we could find to our idea. It generates a news-paper type overview of your personal twitter account. This personalized approach however does not attempt to extract interesting news topics from the large twitter data stream. In our approach we first classify all available tweets and then perform time-series analysis on the results. A few works \cite{Go_Bhayani_Huang_2009,twitter-classifier} applied different machine learning methods (Naive Bayes Classifier, Support Vector Machine, etc) to classify tweets, but their data size was relatively small compared to us. Other works such as Trendsmap \cite{Trendmap}, shows you the latest trends from Twitter for anyplace in the world. However, they are doing data analysis on Twitter hashtags instead of the content of tweets. In our approach we are classifying the full contents of tweets into three categories and then automatically generating key terms of news based on these labeled tweets. This is a novel approach of which we could not find any previous research.
 
+\section{Data model}
+The twitter streaming API provides data in JSON format. It outputs a tweet as a JSON object on a single line. We copied this data storage format to our permanent data storage. That is: we have a JSON object representing a tweet on each separate line in our data files.
+
+The Spark Map-Reduce framework naturally works with text data where each line represents a new element. By using functionality such as Spark's \texttt{textFile}, we can map each line of text, which represents a tweet, to a specific function. This makes using the data in a Map-Reduce context extremely easy.
+
+\subsection{Data storage}
+We stored around 600GB of the twitter stream data on Amazon S3. We used the s3cmd tool, which is a command line tool and client for uploading, retrieving and managing data in Amazon S3 \cite{s3cmd}. By integrating our data collection script with this tool, we can directly upload the twitter streaming data into the S3 bucket. This benefits the whole system because we can load the large data set using the S3 protocol into our Spark instances.
+
+\subsection{Data processing platform}
+The data processing platform we use is Apache Spark running on top of Amazon Elastic MapReduce (EMR). Initially we ran Spark on Amazon EC2 directly without using EMR. It turned out that the default configuration did not work well, and the executed tasks had a failure rate of about 50\%. For this reason, we decided to try the EMR platform. This platform has Spark pre-configured, which resulted in a 0\% failure rate for our tasks.
+
 \section{System architecture}
 The system architecture is depicted in Figure \ref{fig:architecture}. The main idea here is to train a classifier for several news topics using the news twitter accounts as training data. Then we use this classifier to predict the massive stream of public tweets into these news topics. Any tweets that are not classified as 'sports', 'politics' or 'technology' are discarded. This filters out most of the non-relevant tweets. Finally the predicted tweets are used to compute term frequencies over time and detect interesting news trends.
 
